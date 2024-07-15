@@ -1,4 +1,4 @@
-package web4mo.whatsgoingon.entity;
+package web4mo.whatsgoingon.domain.article.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
