@@ -2,9 +2,11 @@ package web4mo.whatsgoingon.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "user")
-public class Member {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userid;
@@ -16,7 +18,13 @@ public class Member {
     private String password;
 
     @Column
+    private LocalDateTime assignDate;
+
+    @Column
     private String name;
+
+    @Column
+    private String profileImg;
 
     @Column
     private String type;
