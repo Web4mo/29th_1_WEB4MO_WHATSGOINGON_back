@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import web4mo.whatsgoingon.domain.category.entity.Keyword;
+import web4mo.whatsgoingon.domain.user.entity.User;
 
 @Entity
 @Getter @Builder
@@ -14,7 +15,7 @@ public class KeywordUser {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
-    private Member user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "keyword_id",nullable = false)
