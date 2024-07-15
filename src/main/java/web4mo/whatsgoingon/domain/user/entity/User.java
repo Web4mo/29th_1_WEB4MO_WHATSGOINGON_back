@@ -1,4 +1,4 @@
-package web4mo.whatsgoingon.entity;
+package web4mo.whatsgoingon.domain.user.entity;
 
 import jakarta.persistence.*;
 

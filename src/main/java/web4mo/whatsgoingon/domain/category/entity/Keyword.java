@@ -1,9 +1,10 @@
-package web4mo.whatsgoingon.entity;
+package web4mo.whatsgoingon.domain.category.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import web4mo.whatsgoingon.domain.category.entity.Category;
+import web4mo.whatsgoingon.domain.category.entity.CategoryKeyword;
 
 import java.util.ArrayList;
 import java.util.List;

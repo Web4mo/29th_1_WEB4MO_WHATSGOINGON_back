@@ -1,23 +1,24 @@
-package web4mo.whatsgoingon.entity;
+package web4mo.whatsgoingon.domain.category.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import org.apache.catalina.User;
 
 @Entity
-@Getter @Builder
-public class KeywordUser {
+@Getter
+@Builder
+public class MediaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long keywordUserId;
+    private Long mediaUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
     private Member user;
 
-    @ManyToOne
-    @JoinColumn(name = "keyword_id",nullable = false)
-    private Keyword keyword;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "media_id")
+    private Media media;
+
 
 }
