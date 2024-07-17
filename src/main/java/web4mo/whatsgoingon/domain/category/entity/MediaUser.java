@@ -11,7 +11,8 @@ import web4mo.whatsgoingon.domain.user.entity.User;
 public class MediaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mediaUserId;
+    @Column(name = "media_user_id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)

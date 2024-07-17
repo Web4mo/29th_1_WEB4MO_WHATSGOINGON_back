@@ -12,11 +12,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class ArticleContent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long articleContentId;
+    @Column(name = "article_content_id")
+    private Long id;
 
-    @Column
-    private Long articleId;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id")
+    private Article article;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String content;
+
 }

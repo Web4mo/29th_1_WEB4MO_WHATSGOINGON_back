@@ -1,8 +1,10 @@
 package web4mo.whatsgoingon.domain.scrap.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import web4mo.whatsgoingon.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 
@@ -12,14 +14,18 @@ import java.time.LocalDateTime;
 public class Folder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long folderId;
+    @Column(name = "folder_id")
+    private Long id;
 
-    @Column
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String name;
 
     @Column
     private LocalDateTime modifyDate;
+
+
 }

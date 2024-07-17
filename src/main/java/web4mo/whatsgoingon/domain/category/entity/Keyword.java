@@ -3,8 +3,6 @@ package web4mo.whatsgoingon.domain.category.entity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import web4mo.whatsgoingon.domain.category.entity.Category;
-import web4mo.whatsgoingon.domain.category.entity.CategoryKeyword;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +11,16 @@ import java.util.List;
 @Getter @Builder
 public class Keyword {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long keywordId;
-
-    @Column @Enumerated(EnumType.STRING)
-    private Category category;
+    @Column(name = "keyword_id")
+    private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "keyword")
-    private List<CategoryKeyword> categoryKeywords=new ArrayList<>();
+    @OneToMany(mappedBy = "keyword",cascade = CascadeType.ALL)
+    private List<UserCategoryKeyword> userCategoryKeywords = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Category category;
 
 }
