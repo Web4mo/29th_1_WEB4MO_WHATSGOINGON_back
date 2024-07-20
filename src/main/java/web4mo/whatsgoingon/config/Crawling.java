@@ -11,11 +11,11 @@ import java.io.IOException;
 public class Crawling {
     public static void main(String[] args) {
         Crawling c = new Crawling();
-        //String articleUrl = "https://n.news.naver.com/mnews/article/003/0012672453"; //크롤링 기사 URL
-        String articleUrl = "https://n.news.naver.com/mnews/article/020/0003577439";
+        //String url = "https://n.news.naver.com/mnews/article/003/0012672453"; //크롤링 기사 URL
+        String url = "https://n.news.naver.com/mnews/article/020/0003577439";
 
         try {
-            System.out.println(c.makeContent(articleUrl));
+            System.out.println(c.makeContent(url));
         } catch (IOException e) {
             e.printStackTrace();
         }
