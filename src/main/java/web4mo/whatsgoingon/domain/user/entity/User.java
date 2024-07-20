@@ -20,10 +20,12 @@ public class User {
     private Long id;
 
     @Column
+    private String loginId;
+    @Column
     private String password;
 
     @Column
-    private LocalDateTime assignDate;
+    private LocalDateTime assignAt;
 
     @Column
     private String name;

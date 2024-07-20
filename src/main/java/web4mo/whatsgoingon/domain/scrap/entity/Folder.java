@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import web4mo.whatsgoingon.domain.user.entity.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -29,7 +29,7 @@ public class Folder {
     private String name;
 
     @Column
-    private LocalDate modifyAt;
+    private LocalDateTime modifyAt;
 
 
 }
