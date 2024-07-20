@@ -17,3 +17,4 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+#주석처리 이거 보이나용?
