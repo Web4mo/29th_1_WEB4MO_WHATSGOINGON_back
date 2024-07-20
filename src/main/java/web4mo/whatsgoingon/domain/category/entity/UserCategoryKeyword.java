@@ -1,12 +1,17 @@
 package web4mo.whatsgoingon.domain.category.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import web4mo.whatsgoingon.domain.user.entity.User;
 
 @Entity
-@Getter @Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserCategoryKeyword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +25,7 @@ public class UserCategoryKeyword {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
     private Keyword keyword;
+
+
 
 }

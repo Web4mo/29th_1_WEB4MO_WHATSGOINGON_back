@@ -1,16 +1,20 @@
 package web4mo.whatsgoingon.domain.scrap.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import web4mo.whatsgoingon.domain.user.entity.User;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@NoArgsConstructor
+
 @Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Folder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,7 @@ public class Folder {
     private String name;
 
     @Column
-    private LocalDateTime modifyDate;
+    private LocalDate modifyAt;
 
 
 }

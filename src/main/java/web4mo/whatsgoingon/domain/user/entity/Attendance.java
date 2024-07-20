@@ -1,13 +1,18 @@
 package web4mo.whatsgoingon.domain.user.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter @Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

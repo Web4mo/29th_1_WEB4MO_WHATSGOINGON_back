@@ -1,6 +1,7 @@
 package web4mo.whatsgoingon.domain.scrap.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,16 +11,19 @@ import web4mo.whatsgoingon.domain.article.entity.Article;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+
 @Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Scrap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scrap_id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
 
@@ -34,7 +38,7 @@ public class Scrap {
     private String articleSummary;
 
     @Column(updatable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")

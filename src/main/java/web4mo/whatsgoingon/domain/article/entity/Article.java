@@ -1,5 +1,6 @@
 package web4mo.whatsgoingon.domain.article.entity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-@Table(name = "article")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +29,7 @@ public class Article {
     private String title;
 
     @Column
-    private String link;
+    private String url;
 
     @Column
     private String img;
@@ -34,7 +37,7 @@ public class Article {
     @Column(updatable = false)
     private LocalDate pubDate;
 
-    @LastModifiedDate
+    @CreatedDate
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
@@ -45,15 +48,5 @@ public class Article {
     @JoinColumn(name = "keyword_id",nullable = false)
     private Keyword keyword;
 
-    @OneToOne(mappedBy = "article",fetch = FetchType.LAZY)
-    private Scrap scrap;
-
-    @Builder
-    public Article(String title, String link, String img,LocalDate pubDate ) {
-        this.title = title;
-        this.link = link;
-        this.img = img;
-        this.pubDate = pubDate;
-    }
 
 }
