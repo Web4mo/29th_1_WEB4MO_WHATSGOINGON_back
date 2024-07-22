@@ -14,6 +14,7 @@ public class Crawling {
         //String url = "https://n.news.naver.com/mnews/article/003/0012672453"; //크롤링 기사 URL
         String url = "https://n.news.naver.com/mnews/article/020/0003577439";
 
+
         try {
             System.out.println(c.makeContent(url));
         } catch (IOException e) {
@@ -31,6 +32,7 @@ public class Crawling {
         } else {
             return "기사 본문을 찾을 수 없습니다.";
         }
+        //여기도 주석 
     }
 }
 
