@@ -3,7 +3,7 @@ package web4mo.whatsgoingon.domain.user.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import web4mo.whatsgoingon.domain.user.entity.User;
+import web4mo.whatsgoingon.domain.user.entity.Member;
 
 @Getter
 @NoArgsConstructor
@@ -24,8 +24,8 @@ public class SignUpRequestDto {
         this.type=type;
     }
 
-    public User toEntity(){
-        return User.builder()
+    public Member toEntity(){
+        return Member.builder()
                 .loginId(loginId)
                 .password(password)
                 .name(name)

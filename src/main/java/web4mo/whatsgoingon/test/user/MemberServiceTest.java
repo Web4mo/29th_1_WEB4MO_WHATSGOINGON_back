@@ -12,33 +12,34 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
-import web4mo.whatsgoingon.domain.user.entity.User;
+import web4mo.whatsgoingon.domain.user.dto.TokenDto;
+import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 import web4mo.whatsgoingon.domain.user.service.UserService;
 
+import java.net.http.HttpHeaders;
 import java.util.Optional;
 
+import static org.aspectj.bridge.MessageUtil.fail;
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class UserServiceTest {
+public class MemberServiceTest {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
 
-//    @Autowired
-//    private WebApplicationContext context;
+    private SignUpRequestDto signUpRequestDto;
 
     //private MockMvc mvc;
 
     @Test
-    public void 회원가입() throws Exception{
+    public void 회원가입() throws Exception {
         //given
         String loginId="loginId";
         String password="password";
@@ -56,17 +57,16 @@ public class UserServiceTest {
 
         //when
         //User user=userRequestDto.toEntity();
-        Long saveId=userService.signup(userRequestDto);
+        String saveId=userService.signup(userRequestDto);
 
         //then
-        Optional<User> foundUser= userRepository.findByLoginId(loginId);
+        Optional<Member> foundUser= userRepository.findByLoginId(loginId);
         assertTrue(foundUser.isPresent());
-        assertEquals(loginId,foundUser.get().getLoginId());
-        assertEquals(password,foundUser.get().getPassword());
-        assertEquals(name,foundUser.get().getName());
-        assertEquals(type,foundUser.get().getType());
-        System.out.println(">>>>>>>>>> [sign_up] = "+foundUser.isPresent());
-        System.out.println(">>>>>>>>>> [loginId]="+foundUser.get().getLoginId()+"[password]="+foundUser.get().getPassword()+"[name]"+foundUser.get().getName()+"[type]"+foundUser.get().getType());
+        assertEquals(loginId, foundUser.get().getLoginId());
+        assertEquals(password, foundUser.get().getPassword());
+        assertEquals(name, foundUser.get().getName());
+        System.out.println(">>>>>>>>>> [sign_up] = " + foundUser.isPresent());
+        System.out.println(">>>>>>>>>> [loginId]=" + foundUser.get().getLoginId() + "[password]=" + foundUser.get().getPassword() + "[name]" + foundUser.get().getName() + "[type]" + foundUser.get().getType());
 
     }
 
@@ -84,8 +84,8 @@ public class UserServiceTest {
                 .build();
 
         //when
-        Long saveId1=userService.signup(userRequestDto1);
-        Long saveId2=userService.signup(userRequestDto2);
+        String saveId1=userService.signup(userRequestDto1);
+        String saveId2=userService.signup(userRequestDto2);
 
         //then
         fail("예외가 발생해야 한다.");
@@ -108,40 +108,34 @@ public class UserServiceTest {
                 .build();
 
         //when
-        Long saveId=userService.signup(userRequestDto);
+        String saveId=userService.signup(userRequestDto);
 
         //Then
         fail("비밀번호 불일치 예외 발생");
     }
 
-//    @BeforeEach
-//    public void setup(){
-//        mvc= MockMvcBuilders
-//                .webAppContextSetup(this.context)
-//                .apply(springSecurity())
-//                .build();
-//        User user= User.builder()
-//                .loginId("id1")
-//                .password("password")
-//                .build();
-//        userRepository.save(user);
-//
-//    }
 //    @Test
-//    public void 로그인()throws Exception{
-//        //given
-//        String loginId="id1";
-//        String password="password";
+//    public void signInTest() {
+//        userService.signup(SignUpRequestDto.builder().loginId("userId").password("12345678").name("member").build());
 //
-//        //when
-//        mvc.perform(formLogin().loginId(loginId).password(password))
-//                .andDo(print())
+//        LogInRequestDto logInRequestDto = LogInRequestDto.builder()
+//                .loginId("userId")
+//                .password("12345678").build();
 //
-//        //then
+//        // 로그인 요청
+//        TokenDto jwtToken = userService.login(logInRequestDto);
+
+//        // HttpHeaders 객체 생성 및 토큰 추가
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setBearerAuth(jwtToken.getAccessToken());
+//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 //
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/"));
+//        log().info("httpHeaders = {}", httpHeaders);
 //
-//    }
+//        // API 요청 설정
+//        String url = "http://localhost:" + randomServerPort + "/members/test";
+//        ResponseEntity<String> responseEntity = testRestTemplate.postForEntity(url, new HttpEntity<>(httpHeaders), String.class);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isEqualTo(LogInRequestDto.get());
 
 }

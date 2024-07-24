@@ -14,17 +14,45 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-
+@Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    @Override
-    public void configure(HttpSecurity http)  {
-        JwtAuthenticationFilter customFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+////        JwtAuthenticationFilter customFilter = new JwtAuthenticationFilter(jwtTokenProvider);
+////        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
+        http.addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
+
+
+        //csrf disable
+        http.csrf((auth) -> auth.disable());
+        //From 로그인 방식 disable
+        http.formLogin((auth) -> auth.disable());
+        //http basic 인증 방식 disable
+        http.httpBasic((auth) -> auth.disable());
+        //경로별 인가 작업
+        http.authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/login", "/", "/join").permitAll()
+                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .anyRequest().authenticated());
+
+        //세션 설정
+        http.sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        return http.build();
     }
+
 
 }

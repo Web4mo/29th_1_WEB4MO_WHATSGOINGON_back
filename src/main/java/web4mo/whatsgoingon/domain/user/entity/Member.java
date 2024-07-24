@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", length = 30, nullable = false)
@@ -29,6 +29,9 @@ public class User {
 
     @Column
     private String name;
+
+    @Enumerated
+    private Role role;
 
     @Column
     private String profileImg;

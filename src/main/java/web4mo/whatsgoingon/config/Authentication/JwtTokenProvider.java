@@ -26,10 +26,8 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
     private final Key key;
-    private final CustomerUserDetailsService customUserDetailsService;
 
-    public JwtTokenProvider(@Value("$(jwt.secrete") String secretKey, CustomerUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
+    public JwtTokenProvider(@Value("${jwt.secrete}") String secretKey, CustomerUserDetailsService customUserDetailsService, CustomerUserDetailsService customerUserDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -79,19 +77,16 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication return
-        // UserDetails: interface, User: UserDetails를 구현한 class
-        //
-        // UserDetails principal = new User(claims.getSubject(), "", authorities);
-
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getAuthentication(accessToken));
-
-        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+        // UserDetails: interface, Member: UserDetails를 구현한 class
+        UserDetails userDetails = new User(claims.getSubject(), "", authorities);
+        //UserDetails userDetails=customerUserDetailsService.loadUserByUsername(claims.getSubject());
+        return new UsernamePasswordAuthenticationToken(userDetails , "", authorities);
 
     }
 
-public boolean validateToken(String token) {
+public Boolean validateToken(String token) {
     try {
-        Jwts.parserBuilder()
+        Jwts.parser()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token);
@@ -111,7 +106,7 @@ public boolean validateToken(String token) {
     // accessToken
     private Claims parseClaims(String accessToken) {
         try {
-            return Jwts.parserBuilder()
+            return Jwts.parser()
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(accessToken)
