@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,26 +14,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", length = 30, nullable = false)
+    @Column(name = "attendance_id")
     private Long id;
 
     @Column
-    private String loginId;
-    @Column
-    private String password;
+    private LocalDate attendAt;
 
-    @Column
-    private LocalDateTime assignAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column
-    private String name;
-
-    @Column
-    private String profileImg;
-
-    @Column
-    private String type;
 }

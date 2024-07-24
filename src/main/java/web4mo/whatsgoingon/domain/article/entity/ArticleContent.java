@@ -1,5 +1,7 @@
 package web4mo.whatsgoingon.domain.article.entity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -7,16 +9,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-@Getter
-@Table(name = "articleContent")
+@AllArgsConstructor
+@Builder
 public class ArticleContent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long articleContentId;
+    @Column(name = "article_content_id")
+    private Long id;
 
-    @Column
-    private Long articleId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id")
+    private Article article;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String content;
+
 }

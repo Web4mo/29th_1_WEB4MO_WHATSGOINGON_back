@@ -1,18 +1,21 @@
 package web4mo.whatsgoingon.domain.category.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mediaId;
+    @Column(name = "media_id")
+    private Long id;
 
     private String name;
     private String link;
