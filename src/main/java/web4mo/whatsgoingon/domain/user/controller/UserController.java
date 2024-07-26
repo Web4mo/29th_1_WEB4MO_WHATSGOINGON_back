@@ -15,10 +15,14 @@ import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.TokenDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.service.UserService;
+import web4mo.whatsgoingon.response.Response;
+import static web4mo.whatsgoingon.response.Message.*;
+
+import static web4mo.whatsgoingon.response.Response.success;
 
 @Tag(name = "UserController", description = "사용자 관리 API")
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 @ResponseBody
 public class UserController {
@@ -27,9 +31,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/getcurrentMemberTest")
-    public ResponseEntity<?> getMember(){
+    public Response getMember(){
         userService.getCurrentMember();
-        return ResponseEntity.ok("Success")
+        return success("Test success");
     }
 
     @GetMapping("/")
@@ -40,9 +44,9 @@ public class UserController {
 
     //회원가입
     @PostMapping("/auth/signup")
-    public ResponseEntity<?> signup(@RequestBody SignUpRequestDto userFormDTO){
+    public Response signup(@RequestBody SignUpRequestDto userFormDTO){
         userService.signup(userFormDTO);
-       return ResponseEntity.ok("Signup Success");
+       return success(SIGN_UP);
     }
 
     // User 조회
@@ -53,26 +57,26 @@ public class UserController {
 
     //로그인
     @PostMapping("/auth/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LogInRequestDto logInRequestDto){
+    public Response login(@RequestBody LogInRequestDto logInRequestDto){
         log.info("request loginId ="+logInRequestDto.getLoginId()+"request password ="+logInRequestDto.getPassword());
         TokenDto jwtToken = userService.login(logInRequestDto);
         log.info("jwtToken accessToken="+jwtToken.getAccessToken());
 
-        return ResponseEntity.ok(jwtToken);
+        return success(LOG_IN,jwtToken);
     }
 
     //엑세스 토큰 재발급
     @PostMapping(" /auth/login")
-    public ResponseEntity<?> reIssue(@RequestBody TokenDto tokenDto){
+    public Response reIssue(@RequestBody TokenDto tokenDto){
         userService.tokenReissue(tokenDto);
-        return ResponseEntity.ok("Reissue Success");
+        return success("성공했습니다.");
     }
 
     //로그아웃
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("Authrization") String token){
+    public Response logout(@RequestHeader("Authrization") String token){
 
-        return ResponseEntity.ok("Logout Success");
+        return success(LOG_OUT);
     }
 
 
