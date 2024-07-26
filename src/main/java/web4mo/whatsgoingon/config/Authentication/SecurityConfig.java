@@ -1,11 +1,13 @@
 package web4mo.whatsgoingon.config.Authentication;
 
 import lombok.RequiredArgsConstructor;
+import org.springdoc.webmvc.core.service.RequestService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -20,38 +22,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
     private final JwtTokenProvider jwtTokenProvider;
 
-
-//    @Override
-//    public void configure(HttpSecurity http) throws Exception {
-////        JwtAuthenticationFilter customFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-////        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//    }
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-        http.addFilterBefore(jwtAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
+        http.httpBasic(AbstractHttpConfigurer::disable);
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.formLogin(AbstractHttpConfigurer::disable);
+        http.authorizeHttpRequests((auth) ->auth.requestMatchers("/auth/login", "/", "auth/signup","/v3/api-docs/","/swagger-ui/").permitAll()
+                .anyRequest().authenticated());
+        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-
-        //csrf disable
-        http.csrf((auth) -> auth.disable());
-        //From 로그인 방식 disable
-        http.formLogin((auth) -> auth.disable());
-        //http basic 인증 방식 disable
-        http.httpBasic((auth) -> auth.disable());
-        //경로별 인가 작업
-        http.authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated());
-
-        //세션 설정
-        http.sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        return http.build();
+        return http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),UsernamePasswordAuthenticationFilter.class).build();
     }
 
 

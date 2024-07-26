@@ -26,10 +26,13 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
     private final Key key;
+    private final CustomerUserDetailsService customerUserDetailsService;
 
     public JwtTokenProvider(@Value("${jwt.secrete}") String secretKey, CustomerUserDetailsService customUserDetailsService, CustomerUserDetailsService customerUserDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        log.info("key 생성중");
+        this.customerUserDetailsService = customerUserDetailsService;
     }
 
     //유저 정보로 accessToken, refreshtoken 생성
@@ -78,8 +81,8 @@ public class JwtTokenProvider {
 
         // UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, Member: UserDetails를 구현한 class
-        UserDetails userDetails = new User(claims.getSubject(), "", authorities);
-        //UserDetails userDetails=customerUserDetailsService.loadUserByUsername(claims.getSubject());
+        //UserDetails userDetails = new User(claims.getSubject(), "", authorities);
+        UserDetails userDetails=customerUserDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails , "", authorities);
 
     }
