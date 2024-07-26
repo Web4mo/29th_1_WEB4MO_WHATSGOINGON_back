@@ -32,7 +32,7 @@ public class Crawling {
         } else {
             return "기사 본문을 찾을 수 없습니다.";
         }
-        //여기도 주석 
+        //여기도 주석
     }
 }
 

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import web4mo.whatsgoingon.domain.user.entity.User;
+import web4mo.whatsgoingon.domain.user.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +23,7 @@ public class Folder {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Member member;
 
     @Column
     private String name;
