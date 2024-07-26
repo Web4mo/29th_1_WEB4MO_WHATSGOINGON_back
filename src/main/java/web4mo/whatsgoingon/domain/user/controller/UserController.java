@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
 import web4mo.whatsgoingon.config.Authentication.SecurityUtil;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;

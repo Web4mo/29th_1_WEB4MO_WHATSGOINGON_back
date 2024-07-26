@@ -75,6 +75,7 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
 
+
         //실제 인증
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
@@ -86,9 +87,12 @@ public class UserService {
         Authentication authentication=authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         if(!authentication.isAuthenticated())
             log.info("인증 실패");
+        String userId= authentication.getName();
+        log.info("loginId"+userId);
+
         log.info("인증: "+String.valueOf(authentication));
         //인증 정보 기반으로 jwt 토큰 생성
-
+        
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtTokenProvider.generateTokenDto(authentication);
     }
@@ -99,6 +103,7 @@ public class UserService {
         Authentication authentication=jwtTokenProvider.getAuthentication(refreshToken);
         //String userId= authentication.getName();
 
+        //log.info("loginId"+userId);
         if(StringUtils.hasText(refreshToken ) && jwtTokenProvider.validateToken(refreshToken)){
             log.info("getting new access Token");
             String newAccessToken = jwtTokenProvider.createAccessToken(authentication);

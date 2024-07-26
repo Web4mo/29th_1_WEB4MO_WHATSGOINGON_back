@@ -4585,3 +4585,116 @@ Action:
 
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
+2024-07-26T21:42:01.637+09:00  INFO 25788 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Starting WhatsgoingonApplication using Java 17.0.10 with PID 25788 (C:\Users\이서진\Solux\What's going on\backend\out\production\classes started by Seojin in C:\Users\이서진\Solux\What's going on\backend)
+2024-07-26T21:42:01.639+09:00  INFO 25788 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-26T21:42:02.897+09:00  INFO 25788 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-26T21:42:02.983+09:00  INFO 25788 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 74 ms. Found 1 JPA repository interface.
+2024-07-26T21:42:03.602+09:00  INFO 25788 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2024-07-26T21:42:03.616+09:00  INFO 25788 --- [whatsgoingon] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-26T21:42:03.617+09:00  INFO 25788 --- [whatsgoingon] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-26T21:42:03.726+09:00  INFO 25788 --- [whatsgoingon] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-26T21:42:03.726+09:00  INFO 25788 --- [whatsgoingon] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2027 ms
+2024-07-26T21:42:03.928+09:00  INFO 25788 --- [whatsgoingon] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-26T21:42:04.056+09:00  INFO 25788 --- [whatsgoingon] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-26T21:42:04.114+09:00  INFO 25788 --- [whatsgoingon] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-26T21:42:04.567+09:00  INFO 25788 --- [whatsgoingon] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-26T21:42:04.607+09:00  INFO 25788 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-26T21:42:05.011+09:00  INFO 25788 --- [whatsgoingon] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6acb45c1
+2024-07-26T21:42:05.014+09:00  INFO 25788 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-26T21:42:06.341+09:00  INFO 25788 --- [whatsgoingon] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-26T21:42:06.483+09:00  INFO 25788 --- [whatsgoingon] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:42:06.810+09:00  INFO 25788 --- [whatsgoingon] [main] w.w.c.Authentication.JwtTokenProvider    : key 생성중
+2024-07-26T21:42:07.627+09:00  INFO 25788 --- [whatsgoingon] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customerUserDetailsService
+2024-07-26T21:42:08.117+09:00  WARN 25788 --- [whatsgoingon] [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-07-26T21:42:08.372+09:00  INFO 25788 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2024-07-26T21:42:08.381+09:00  INFO 25788 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Started WhatsgoingonApplication in 7.49 seconds (process running for 8.303)
+2024-07-26T21:42:34.799+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-26T21:42:34.799+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-07-26T21:42:34.801+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-07-26T21:42:34.884+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.d.user.controller.UserController     : request loginId =anyrequest password =1234
+2024-07-26T21:42:35.087+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.domain.user.service.UserService      : 로그인 진행중 ....
+2024-07-26T21:42:35.088+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.domain.user.service.UserService      : 인증토큰: UsernamePasswordAuthenticationToken [Principal=any, Credentials=[PROTECTED], Authenticated=false, Details=null, Granted Authorities=[]]
+2024-07-26T21:42:35.089+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.domain.user.service.UserService      : logInRequestDto.getLoginId(),logInRequestDto.getPassword() : any
+2024-07-26T21:42:35.191+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.c.A.CustomerUserDetailsService       : loginID:any
+2024-07-26T21:42:35.214+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.c.A.CustomerUserDetailsService       : Optional[web4mo.whatsgoingon.domain.user.entity.Member@4ab3ce42]
+2024-07-26T21:42:35.394+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.domain.user.service.UserService      : loginIdany
+2024-07-26T21:42:35.394+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.domain.user.service.UserService      : 인증: UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=any, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[]]
+2024-07-26T21:42:35.531+09:00  INFO 25788 --- [whatsgoingon] [http-nio-8081-exec-9] w.w.d.user.controller.UserController     : jwtToken accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbnkiLCJhdXRoIjoiIiwiaWF0IjoxNzIxOTk3NzU1LCJleHAiOjE3MjE5OTg2MTl9.pRC2QGrb8bziMcePRYmBgjVCYJh8chxVOEgjG0MLk1U
+2024-07-26T21:44:53.533+09:00  INFO 25788 --- [whatsgoingon] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:44:53.535+09:00  INFO 25788 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-26T21:44:53.554+09:00  INFO 25788 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-26T21:51:55.391+09:00  INFO 10744 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Starting WhatsgoingonApplication using Java 17.0.10 with PID 10744 (C:\Users\이서진\Solux\What's going on\backend\out\production\classes started by Seojin in C:\Users\이서진\Solux\What's going on\backend)
+2024-07-26T21:51:55.395+09:00  INFO 10744 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-26T21:51:56.294+09:00  INFO 10744 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-26T21:51:56.365+09:00  INFO 10744 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 1 JPA repository interface.
+2024-07-26T21:51:56.866+09:00  INFO 10744 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2024-07-26T21:51:56.877+09:00  INFO 10744 --- [whatsgoingon] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-26T21:51:56.877+09:00  INFO 10744 --- [whatsgoingon] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-26T21:51:56.959+09:00  INFO 10744 --- [whatsgoingon] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-26T21:51:56.960+09:00  INFO 10744 --- [whatsgoingon] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1497 ms
+2024-07-26T21:51:57.093+09:00  INFO 10744 --- [whatsgoingon] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-26T21:51:57.157+09:00  INFO 10744 --- [whatsgoingon] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-26T21:51:57.186+09:00  INFO 10744 --- [whatsgoingon] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-26T21:51:57.494+09:00  INFO 10744 --- [whatsgoingon] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-26T21:51:57.520+09:00  INFO 10744 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-26T21:51:57.754+09:00  INFO 10744 --- [whatsgoingon] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57a982f9
+2024-07-26T21:51:57.756+09:00  INFO 10744 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-26T21:51:58.787+09:00  INFO 10744 --- [whatsgoingon] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-26T21:51:58.943+09:00  INFO 10744 --- [whatsgoingon] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:51:59.229+09:00  INFO 10744 --- [whatsgoingon] [main] w.w.c.Authentication.JwtTokenProvider    : key 생성중
+2024-07-26T21:51:59.745+09:00  INFO 10744 --- [whatsgoingon] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customerUserDetailsService
+2024-07-26T21:52:00.143+09:00  WARN 10744 --- [whatsgoingon] [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-07-26T21:52:00.346+09:00  INFO 10744 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2024-07-26T21:52:00.353+09:00  INFO 10744 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Started WhatsgoingonApplication in 5.627 seconds (process running for 6.403)
+2024-07-26T21:53:40.510+09:00  INFO 10744 --- [whatsgoingon] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:53:40.512+09:00  INFO 10744 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-26T21:53:40.520+09:00  INFO 10744 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-26T21:54:12.693+09:00  INFO 44588 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Starting WhatsgoingonApplication using Java 17.0.10 with PID 44588 (C:\Users\이서진\Solux\What's going on\backend\out\production\classes started by Seojin in C:\Users\이서진\Solux\What's going on\backend)
+2024-07-26T21:54:12.697+09:00  INFO 44588 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-26T21:54:13.641+09:00  INFO 44588 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-26T21:54:13.716+09:00  INFO 44588 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 1 JPA repository interface.
+2024-07-26T21:54:14.209+09:00  INFO 44588 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2024-07-26T21:54:14.221+09:00  INFO 44588 --- [whatsgoingon] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-26T21:54:14.222+09:00  INFO 44588 --- [whatsgoingon] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-26T21:54:14.319+09:00  INFO 44588 --- [whatsgoingon] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-26T21:54:14.319+09:00  INFO 44588 --- [whatsgoingon] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1561 ms
+2024-07-26T21:54:14.486+09:00  INFO 44588 --- [whatsgoingon] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-26T21:54:14.545+09:00  INFO 44588 --- [whatsgoingon] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-26T21:54:14.579+09:00  INFO 44588 --- [whatsgoingon] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-26T21:54:14.914+09:00  INFO 44588 --- [whatsgoingon] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-26T21:54:14.938+09:00  INFO 44588 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-26T21:54:15.186+09:00  INFO 44588 --- [whatsgoingon] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@8ee03f5
+2024-07-26T21:54:15.189+09:00  INFO 44588 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-26T21:54:16.363+09:00  INFO 44588 --- [whatsgoingon] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-26T21:54:16.518+09:00  INFO 44588 --- [whatsgoingon] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:54:16.774+09:00  INFO 44588 --- [whatsgoingon] [main] w.w.c.Authentication.JwtTokenProvider    : key 생성중
+2024-07-26T21:54:17.342+09:00  INFO 44588 --- [whatsgoingon] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customerUserDetailsService
+2024-07-26T21:54:17.768+09:00  WARN 44588 --- [whatsgoingon] [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-07-26T21:54:17.949+09:00  INFO 44588 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2024-07-26T21:54:17.956+09:00  INFO 44588 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Started WhatsgoingonApplication in 5.778 seconds (process running for 6.398)
+2024-07-26T21:54:41.485+09:00  INFO 44588 --- [whatsgoingon] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:54:41.486+09:00  INFO 44588 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-26T21:54:41.493+09:00  INFO 44588 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-26T21:54:55.908+09:00  INFO 20376 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Starting WhatsgoingonApplication using Java 17.0.10 with PID 20376 (C:\Users\이서진\Solux\What's going on\backend\out\production\classes started by Seojin in C:\Users\이서진\Solux\What's going on\backend)
+2024-07-26T21:54:55.912+09:00  INFO 20376 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-26T21:54:56.778+09:00  INFO 20376 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-26T21:54:56.842+09:00  INFO 20376 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 1 JPA repository interface.
+2024-07-26T21:54:57.346+09:00  INFO 20376 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2024-07-26T21:54:57.356+09:00  INFO 20376 --- [whatsgoingon] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-26T21:54:57.356+09:00  INFO 20376 --- [whatsgoingon] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-26T21:54:57.441+09:00  INFO 20376 --- [whatsgoingon] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-26T21:54:57.442+09:00  INFO 20376 --- [whatsgoingon] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1474 ms
+2024-07-26T21:54:57.585+09:00  INFO 20376 --- [whatsgoingon] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-26T21:54:57.647+09:00  INFO 20376 --- [whatsgoingon] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-26T21:54:57.681+09:00  INFO 20376 --- [whatsgoingon] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-26T21:54:58.010+09:00  INFO 20376 --- [whatsgoingon] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-26T21:54:58.041+09:00  INFO 20376 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-26T21:54:58.294+09:00  INFO 20376 --- [whatsgoingon] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9cc0505
+2024-07-26T21:54:58.297+09:00  INFO 20376 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-26T21:54:59.369+09:00  INFO 20376 --- [whatsgoingon] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-26T21:54:59.508+09:00  INFO 20376 --- [whatsgoingon] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-26T21:54:59.786+09:00  INFO 20376 --- [whatsgoingon] [main] w.w.c.Authentication.JwtTokenProvider    : key 생성중
+2024-07-26T21:55:00.324+09:00  INFO 20376 --- [whatsgoingon] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customerUserDetailsService
+2024-07-26T21:55:00.707+09:00  WARN 20376 --- [whatsgoingon] [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-07-26T21:55:00.894+09:00  INFO 20376 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2024-07-26T21:55:00.904+09:00  INFO 20376 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Started WhatsgoingonApplication in 5.605 seconds (process running for 6.224)
