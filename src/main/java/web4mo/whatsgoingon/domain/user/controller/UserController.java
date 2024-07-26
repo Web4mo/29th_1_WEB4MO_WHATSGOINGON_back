@@ -25,6 +25,12 @@ public class UserController {
     private String id=null;
     private final UserService userService;
 
+    @GetMapping("/getcurrentMemberTest")
+    public ResponseEntity<?> getMember(){
+        userService.getCurrentMember();
+        return ResponseEntity.ok("Success")
+    }
+
     @GetMapping("/")
     public String home(){
         return "Home";

@@ -1,6 +1,5 @@
 package web4mo.whatsgoingon.domain.user.service;
 
-import com.sun.net.httpserver.Authenticator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
+import web4mo.whatsgoingon.domain.user.dto.GetMemberTestDto;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.TokenDto;
@@ -130,5 +130,12 @@ public class UserService {
             throw new IllegalStateException("회원이 아닙니다.");
         }
         return findUsers.get();
+    }
+
+    public Optional<GetMemberTestDto> getCurrentMember() {
+
+        Optional<Member> member = userRepository.findByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
+        
+        return member;
     }
 }
