@@ -46,6 +46,7 @@ public class JwtTokenProvider {
         return TokenDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .userId(authentication.getName())
                 .build();
     }
 
@@ -75,11 +76,6 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String getAccount(String token) {
-        return Jwts.parser()
-                .setSigningKey(key).build()
-                .parseClaimsJws(token).getBody().getSubject();
-    }
 
 
     //jwt 토큰 복호화해서 토큰에 들어있는 정보 꺼냄
