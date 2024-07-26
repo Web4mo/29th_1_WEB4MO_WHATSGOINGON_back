@@ -1,8 +1,11 @@
 package web4mo.whatsgoingon.config.NaverApi;
 
-import org.springframework.boot.json.GsonJsonParser;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.*;
 import java.net.HttpURLConnection;
@@ -10,25 +13,34 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class NaverApi {
+
+    // naverApiResearch(검색어, 개수, 정렬 방법)
+    // date - 날짜순, sim - 정확도 순
+    // articleApiDto 들의 List 형태로 반환
+
+    // 예시 사용법
+    /*
     public static void main(String[] args){
         NaverApi test = new NaverApi();
 
-        System.out.println(test.naverApiResearch("트럽프", 2, "date"));
-        GsonJsonParser gsonJsonParser = new GsonJsonParser();
-        
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<articleDto>>(){}.getType();
+        List<articleApiDto> articles = test.naverApiResearch("트럽프", 2, "date");
 
-        // Parse the JSON response to get the "items" array
-        List<articleDto> articles = gson.fromJson(gson.fromJson(jsonResponse, JsonObject.class).getAsJsonArray("items"), listType);
-
-        // Print the articles to verify
-        for (articleDto article : articles) {
-            System.out.println(article.getTitle());
+        for (articleApiDto article : articles) {
+            System.out.println(article.getTitle()); // 기사 제목들만 출력되는중
         }
     }
+    */
 
-    private String naverApiResearch(String query, int display, String sort){
+    public static List<articleApiDto> parseJsonToArticles(String jsonResponse) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+        JsonArray itemsArray = jsonObject.getAsJsonArray("items");
+
+        Type listType = new TypeToken<List<articleApiDto>>(){}.getType();
+        return gson.fromJson(itemsArray, listType);
+    }
+
+    private List<articleApiDto> naverApiResearch(String query, int display, String sort){
         String clientId = "bEN9b9S5f29hb9uLIAwk";
         String clientSecret = "7qhxwNjo7b";
 
@@ -44,7 +56,7 @@ public class NaverApi {
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-        return get(apiURL,requestHeaders);
+        return parseJsonToArticles(get(apiURL,requestHeaders));
     }
     private static String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);
