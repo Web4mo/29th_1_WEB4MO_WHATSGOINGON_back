@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private final Key key;
     private final CustomerUserDetailsService customerUserDetailsService;
+    private static final long EXPIRE_TIME=10*60*60*24;
+    private static final long REFRESH_EXPIRE_TIME=10*60*60*24*3;
 
     public JwtTokenProvider(@Value("${jwt.secrete}") String secretKey, CustomerUserDetailsService customUserDetailsService, CustomerUserDetailsService customerUserDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -37,31 +39,40 @@ public class JwtTokenProvider {
 
     //유저 정보로 accessToken, refreshtoken 생성
     public TokenDto generateTokenDto(Authentication authentication) {
-        //권한 가져오기
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-        long now = (new Date()).getTime();
 
-        //access token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
-        String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim("auth",authorities)
-                .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-
-        //refresh token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+        String accessToken = createAccessToken(authentication);
+        String refreshToken = createRefreshToken(authentication);
 
         return TokenDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    public String createAccessToken(Authentication authentication){
+        return generateToken(authentication, EXPIRE_TIME);
+    }
+
+    public String createRefreshToken(Authentication authentication){
+        return generateToken(authentication, REFRESH_EXPIRE_TIME);
+    }
+
+    public String generateToken(Authentication authentication, long expireTime){
+        //권한 가져오기
+        long now = (new Date()).getTime();
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+        Date ExpiresIn = new Date(now + expireTime);
+
+        // token 생성
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("auth", authorities)
+                .setIssuedAt(new Date(now))
+                .setExpiration(ExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
 

@@ -28,7 +28,7 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests((auth) ->auth.requestMatchers("/auth/login", "/", "auth/signup","/v3/api-docs/","/swagger-ui/").permitAll()
+        http.authorizeHttpRequests((auth) ->auth.requestMatchers("/auth/login", "/", "auth/signup","/v3/api-docs/","/swagger-ui/**").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

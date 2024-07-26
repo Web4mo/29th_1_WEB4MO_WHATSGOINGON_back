@@ -1,5 +1,6 @@
 package web4mo.whatsgoingon.domain.user.service;
 
+import com.sun.net.httpserver.Authenticator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
@@ -73,7 +75,7 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
 
-        //실제
+        //실제 인증
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(logInRequestDto.getLoginId(),logInRequestDto.getPassword());
@@ -91,6 +93,27 @@ public class UserService {
         return jwtTokenProvider.generateTokenDto(authentication);
     }
 
+    //refresh 토큰 재발급
+    public TokenDto tokenReissue(TokenDto tokenDto){
+        String refreshToken =tokenDto.getRefreshToken();
+        Authentication authentication=jwtTokenProvider.getAuthentication(refreshToken);
+        //String userId= authentication.getName();
+
+        if(StringUtils.hasText(refreshToken ) && jwtTokenProvider.validateToken(refreshToken)){
+            log.info("getting new access Token");
+            String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
+            return TokenDto.builder()
+                    .accessToken(newAccessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        }else { //refresh token 만료
+            //refreshTokenRepository.deleteByEmail(email);
+            //RT 만료됐다는걸 알리는 예외 발생 -> 로그인으로 유도
+            //throw new RefreshTokenExpired();
+        }
+
+        return tokenDto;
+    }
 
 
     /*

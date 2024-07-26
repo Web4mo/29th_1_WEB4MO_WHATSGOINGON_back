@@ -34,7 +34,7 @@ public class UserController {
     @PostMapping("/auth/signup")
     public ResponseEntity<?> signup(@RequestBody SignUpRequestDto userFormDTO){
         userService.signup(userFormDTO);
-       return ResponseEntity.ok("Success");
+       return ResponseEntity.ok("Signup Success");
     }
 
     // User 조회
@@ -50,9 +50,23 @@ public class UserController {
         TokenDto jwtToken = userService.login(logInRequestDto);
         log.info("jwtToken accessToken="+jwtToken.getAccessToken());
 
-
         return ResponseEntity.ok(jwtToken);
     }
+
+    //엑세스 토큰 재발급
+    @PostMapping(" /auth/login")
+    public ResponseEntity<?> reIssue(@RequestBody TokenDto tokenDto){
+        userService.tokenReissue(tokenDto);
+        return ResponseEntity.ok("Reissue Success");
+    }
+
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authrization") String token){
+
+        return ResponseEntity.ok("Logout Success");
+    }
+
 
     @PostMapping("/test")
     public Long test() {
