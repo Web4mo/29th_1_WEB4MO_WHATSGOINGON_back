@@ -1,4 +1,6 @@
-package web4mo.whatsgoingon.test;
+package web4mo.whatsgoingon.config.NaverApi;
+
+import org.springframework.boot.json.GsonJsonParser;
 
 import java.io.*;
 import java.net.URLEncoder;
@@ -6,13 +8,24 @@ import java.util.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class NaverApi {
     public static void main(String[] args){
         NaverApi test = new NaverApi();
 
         System.out.println(test.naverApiResearch("트럽프", 2, "date"));
+        GsonJsonParser gsonJsonParser = new GsonJsonParser();
+        
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<articleDto>>(){}.getType();
+
+        // Parse the JSON response to get the "items" array
+        List<articleDto> articles = gson.fromJson(gson.fromJson(jsonResponse, JsonObject.class).getAsJsonArray("items"), listType);
+
+        // Print the articles to verify
+        for (articleDto article : articles) {
+            System.out.println(article.getTitle());
+        }
     }
 
     private String naverApiResearch(String query, int display, String sort){
