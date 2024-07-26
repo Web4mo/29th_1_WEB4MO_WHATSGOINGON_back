@@ -22,13 +22,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
     private final JwtTokenProvider jwtTokenProvider;
 
+    private static final String[] LIST = {
+            "/",
+            "/swagger-ui/index.html",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/v3/api-docs/**",
+            "/auth/signup/**",
+            "/auth/login"
+    };
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests((auth) ->auth.requestMatchers("/auth/login", "/", "auth/signup","/v3/api-docs/","/swagger-ui/**").permitAll()
+        http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
