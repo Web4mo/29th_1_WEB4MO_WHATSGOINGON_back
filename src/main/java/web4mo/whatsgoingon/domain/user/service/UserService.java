@@ -1,5 +1,6 @@
 package web4mo.whatsgoingon.domain.user.service;
 
+import com.sun.net.httpserver.Authenticator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
-import web4mo.whatsgoingon.domain.user.dto.GetMemberTestDto;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.TokenDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.entity.RefreshToken;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
 import java.util.Optional;
@@ -60,6 +61,7 @@ public class UserService {
     }
 
 
+
     /*
      *로그인
      */
@@ -92,9 +94,14 @@ public class UserService {
 
         log.info("인증: "+String.valueOf(authentication));
         //인증 정보 기반으로 jwt 토큰 생성
-        
+
+        TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenProvider.generateTokenDto(authentication);
+        log.info(getCurrentMember().getLoginId());
+//        RefreshToken.builder()
+//                .userId(logInRequestDto.getLoginId())
+//                .refreshToken(tokenDto.getRefreshToken());
+        return tokenDto;
     }
 
     //refresh 토큰 재발급
@@ -120,22 +127,16 @@ public class UserService {
         return tokenDto;
     }
 
+    //회원 찾기
+    public Member getCurrentMember() {
 
-    /*
-     *전체 회원 조회
-     */
-    public Member findOne(String loginId){
-        Optional<Member> findUsers= userRepository.findByLoginId(loginId);
-        if (findUsers.isEmpty()){
-            throw new IllegalStateException("회원이 아닙니다.");
+        String user =String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
+        Optional<Member> member = userRepository.findByLoginId(user);
+        if(member.isEmpty()) {
+            throw new IllegalStateException("회원이 없습니다.");
         }
-        return findUsers.get();
+        return member.get();
     }
 
-    public Optional<GetMemberTestDto> getCurrentMember() {
 
-        Optional<Member> member = userRepository.findByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
-        
-        return member;
-    }
 }
