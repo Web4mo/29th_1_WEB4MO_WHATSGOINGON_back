@@ -74,21 +74,22 @@ public class UserController {
         return ResponseEntity.ok("getCurrentMemberTest Success"+"/CurrentMember:"+currentMember.getLoginId());
     }
     @GetMapping("/test/totalMembers")
-    public  ResponseEntity<?> test2(){
-        return ResponseEntity.ok("findAll Success"+userService.findAll());
-
-    @PostMapping(" /auth/login")
-    public Response reIssue(@RequestBody TokenDto tokenDto){
-        userService.tokenReissue(tokenDto);
-        return success("성공했습니다.");
+    public  ResponseEntity<?> test2() {
+        return ResponseEntity.ok("findAll Success" + userService.findAll());
     }
+
+//    @PostMapping(" /auth/login")
+//    public Response reIssue(@RequestBody TokenDto tokenDto){
+//        userService.tokenReissue(tokenDto);
+//        return success("성공했습니다.");
+//    }
 
     //로그아웃
-    @PostMapping("/logout")
-    public Response logout(@RequestHeader("Authrization") String token){
-
-        return success(LOG_OUT);
-    }
+//    @PostMapping("/logout")
+//    public Response logout(@RequestHeader("Authrization") String token){
+//
+//        return success(LOG_OUT);
+//    }
 
 
 

@@ -1545,3 +1545,29 @@ java.lang.IllegalArgumentException: A granted authority textual representation i
 2024-07-27T13:27:01.503+09:00  INFO 29560 --- [whatsgoingon] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-07-27T13:27:01.503+09:00  INFO 29560 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-07-27T13:27:01.512+09:00  INFO 29560 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-07-27T13:34:01.562+09:00  INFO 47612 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Starting WhatsgoingonApplication using Java 17.0.10 with PID 47612 (C:\Users\이서진\Solux\What's going on\backend\out\production\classes started by Seojin in C:\Users\이서진\Solux\What's going on\backend)
+2024-07-27T13:34:01.565+09:00  INFO 47612 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-07-27T13:34:02.913+09:00  INFO 47612 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-07-27T13:34:03.026+09:00  INFO 47612 --- [whatsgoingon] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 104 ms. Found 3 JPA repository interfaces.
+2024-07-27T13:34:03.600+09:00  INFO 47612 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2024-07-27T13:34:03.612+09:00  INFO 47612 --- [whatsgoingon] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-07-27T13:34:03.614+09:00  INFO 47612 --- [whatsgoingon] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.25]
+2024-07-27T13:34:03.722+09:00  INFO 47612 --- [whatsgoingon] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-07-27T13:34:03.723+09:00  INFO 47612 --- [whatsgoingon] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2112 ms
+2024-07-27T13:34:03.934+09:00  INFO 47612 --- [whatsgoingon] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-07-27T13:34:03.984+09:00  INFO 47612 --- [whatsgoingon] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-07-27T13:34:04.016+09:00  INFO 47612 --- [whatsgoingon] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-07-27T13:34:04.404+09:00  INFO 47612 --- [whatsgoingon] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-07-27T13:34:04.433+09:00  INFO 47612 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-07-27T13:34:04.804+09:00  INFO 47612 --- [whatsgoingon] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@71e7c13f
+2024-07-27T13:34:04.808+09:00  INFO 47612 --- [whatsgoingon] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-07-27T13:34:06.208+09:00  INFO 47612 --- [whatsgoingon] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-07-27T13:34:06.454+09:00  INFO 47612 --- [whatsgoingon] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-07-27T13:34:06.781+09:00  INFO 47612 --- [whatsgoingon] [main] w.w.c.Authentication.JwtTokenProvider    : key 생성중
+2024-07-27T13:34:07.424+09:00  INFO 47612 --- [whatsgoingon] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customerUserDetailsService
+2024-07-27T13:34:08.046+09:00  WARN 47612 --- [whatsgoingon] [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-07-27T13:34:08.309+09:00  INFO 47612 --- [whatsgoingon] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2024-07-27T13:34:08.317+09:00  INFO 47612 --- [whatsgoingon] [main] w.whatsgoingon.WhatsgoingonApplication   : Started WhatsgoingonApplication in 7.364 seconds (process running for 8.073)
+2024-07-27T13:34:12.404+09:00  INFO 47612 --- [whatsgoingon] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-07-27T13:34:12.405+09:00  INFO 47612 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-07-27T13:34:12.412+09:00  INFO 47612 --- [whatsgoingon] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
