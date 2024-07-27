@@ -39,11 +39,6 @@ public class UserController {
        return ResponseEntity.ok("Signup Success");
     }
 
-    // User 조회
-//    @GetMapping("/user/{id}")
-//    public Member findById(@PathVariable String id) {
-//        return
-//    }
 
     //로그인
     @PostMapping("/auth/login")
@@ -56,10 +51,22 @@ public class UserController {
     }
 
     //엑세스 토큰 재발급
-    @PostMapping(" /auth/login")
-    public ResponseEntity<?> reIssue(@RequestBody TokenDto tokenDto){
-        userService.tokenReissue(tokenDto);
-        return ResponseEntity.ok("Reissue Success");
+//    @PostMapping("/auth/login")
+//    public ResponseEntity<?> reIssue(@RequestBody TokenDto tokenDto){
+//        userService.tokenReissue(tokenDto);
+//        return ResponseEntity.ok("Reissue Success");
+//    }
+
+    //test
+    @GetMapping ("/test/currentMemberLoginID")
+    public ResponseEntity<?> test1(){
+        Member currentMember=userService.getCurrentMember();
+        return ResponseEntity.ok("getCurrentMemberTest Success"+"/CurrentMember:"+currentMember.getLoginId());
+    }
+    @GetMapping("/test/totalMembers")
+    public  ResponseEntity<?> test2(){
+        return ResponseEntity.ok("findAll Success"+userService.findAll());
+
     }
 
     //로그아웃
@@ -70,10 +77,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/test")
-    public Long test() {
-        return SecurityUtil.getCurrentStudioId();
-    }
 
 
 }

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.entity.Role;
 
 @Getter
 @NoArgsConstructor
@@ -30,6 +31,7 @@ public class SignUpRequestDto {
                 .password(password)
                 .name(name)
                 .type(type)
+                .role(Role.User)
                 .build();
     }
 }

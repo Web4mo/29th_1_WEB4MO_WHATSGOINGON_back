@@ -61,6 +61,7 @@ public class JwtTokenProvider {
     public String generateToken(Authentication authentication, long expireTime){
         //권한 가져오기
         long now = (new Date()).getTime();
+
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -94,8 +95,8 @@ public class JwtTokenProvider {
 
         // UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, Member: UserDetails를 구현한 class
-        //UserDetails userDetails = new User(claims.getSubject(), "", authorities);
-        UserDetails userDetails=customerUserDetailsService.loadUserByUsername(claims.getSubject());
+        UserDetails userDetails = new User(claims.getSubject(), "", authorities);
+        //UserDetails userDetails=customerUserDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails , "", authorities);
 
     }

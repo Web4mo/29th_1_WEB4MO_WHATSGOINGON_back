@@ -19,6 +19,8 @@ import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.entity.RefreshToken;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -92,7 +94,7 @@ public class UserService {
         String userId= authentication.getName();
         log.info("loginId"+userId);
 
-        log.info("인증: "+String.valueOf(authentication));
+        //log.info("인증: "+String.valueOf(authentication));
         //인증 정보 기반으로 jwt 토큰 생성
 
         TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
@@ -127,6 +129,11 @@ public class UserService {
         return tokenDto;
     }
 
+    //로그아웃
+    public void logout(String userId, String accessToken){
+
+    }
+
     //회원 찾기
     public Member getCurrentMember() {
 
@@ -136,6 +143,16 @@ public class UserService {
             throw new IllegalStateException("회원이 없습니다.");
         }
         return member.get();
+    }
+
+    //전체 회원 조회
+    public List<String> findAll(){
+        List<Member> members=userRepository.findAllBy();
+        List<String> memberList= new ArrayList<>();
+        for(Member member: members){
+            memberList.add(member.getLoginId());
+        }
+        return memberList;
     }
 
 
