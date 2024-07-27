@@ -60,11 +60,11 @@ public class UserController {
         return success(LOG_IN,jwtToken);
     }
 
-    //엑세스 토큰 재발급
-//    @PostMapping("/auth/login")
-//    public ResponseEntity<?> reIssue(@RequestBody TokenDto tokenDto){
+//    //엑세스 토큰 재발급
+//    @PatchMapping("/auth/login")
+//    public Response reIssue(@RequestBody TokenDto tokenDto){
 //        userService.tokenReissue(tokenDto);
-//        return ResponseEntity.ok("Reissue Success");
+//        return success("Reissue Success");
 //    }
 
     //test
@@ -77,12 +77,6 @@ public class UserController {
     public  ResponseEntity<?> test2() {
         return ResponseEntity.ok("findAll Success" + userService.findAll());
     }
-
-//    @PostMapping(" /auth/login")
-//    public Response reIssue(@RequestBody TokenDto tokenDto){
-//        userService.tokenReissue(tokenDto);
-//        return success("성공했습니다.");
-//    }
 
     //로그아웃
 //    @PostMapping("/logout")
