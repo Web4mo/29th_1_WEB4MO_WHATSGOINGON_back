@@ -33,6 +33,8 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
             "/auth/login"
     };
 
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
@@ -43,6 +45,10 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
         http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.exceptionHandling((exception)-> exception
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint));
 
         return http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),UsernamePasswordAuthenticationFilter.class).build();
     }
