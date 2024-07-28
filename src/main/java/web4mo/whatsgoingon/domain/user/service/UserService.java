@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
+import web4mo.whatsgoingon.domain.scrap.entity.Folder;
+import web4mo.whatsgoingon.domain.scrap.repository.FolderRepository;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.TokenDto;
@@ -32,6 +34,8 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final FolderRepository folderRepository;
+
     /*
     *회원가입
      */
@@ -40,7 +44,13 @@ public class UserService {
         validateDuplicateUser(signUpRequestDto.getLoginId());
         isPasswordMatching(signUpRequestDto.getPassword(), signUpRequestDto.getConfirmPassword());
 
-        return userRepository.save(signUpRequestDto.toEntity()).getLoginId();
+        Member member = signUpRequestDto.toEntity();
+        Folder folder = Folder.builder()
+                .member(member)
+                .name("기본 폴더").build();
+
+        folderRepository.save(folder);
+        return userRepository.save(member).getLoginId();
     }
 
     //loginId 중복 체크

@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
+import web4mo.whatsgoingon.BaseTime;
 import web4mo.whatsgoingon.domain.article.entity.Article;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @Getter
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Scrap {
+public class Scrap extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "scrap_id")
@@ -36,12 +33,4 @@ public class Scrap {
 
     @Column(columnDefinition = "TEXT")
     private String articleSummary;
-
-    @Column(updatable = false)
-    private LocalDateTime createAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
 }
