@@ -15,4 +15,8 @@ public class Message {
 
     // ScrapController
     public static String SCRAPING = "스크랩 성공했습니다.";
+
+    // ProfileController
+    public static String FETCH_PROFILE = "프로필 불러오기 성공했습니다.";
+    public static String UPDATE_PROFILE = "프로필 수정 성공했습니다.";
 }

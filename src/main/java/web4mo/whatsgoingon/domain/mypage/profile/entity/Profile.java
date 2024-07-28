@@ -3,6 +3,7 @@ package web4mo.whatsgoingon.domain.mypage.profile.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import web4mo.whatsgoingon.domain.BaseTime;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -11,8 +12,8 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
-public class Profile {
-
+public class Profile extends BaseTime {
+    // Getters and setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

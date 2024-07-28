@@ -1,8 +1,15 @@
 package web4mo.whatsgoingon.domain.mypage.profile.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Set;
 
+
+@Setter
+@Getter
 public class ProfileDto {
+    // Getters and setters
     private String name;
     private String id;
     private String userType;
@@ -12,68 +19,4 @@ public class ProfileDto {
     private Set<String> media;
     private String profileImg;
 
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
-
-    public String getAssignDate() {
-        return assignDate;
-    }
-
-    public void setAssignDate(String assignDate) {
-        this.assignDate = assignDate;
-    }
-
-    public Set<String> getInterests() {
-        return interests;
-    }
-
-    public void setInterests(Set<String> interests) {
-        this.interests = interests;
-    }
-
-    public Set<String> getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(Set<String> keywords) {
-        this.keywords = keywords;
-    }
-
-    public Set<String> getMedia() {
-        return media;
-    }
-
-    public void setMedia(Set<String> media) {
-        this.media = media;
-    }
-
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
-    }
 }
