@@ -1,24 +1,24 @@
 package web4mo.whatsgoingon.domain.scrap.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import web4mo.whatsgoingon.domain.scrap.service.ScrapService;
 import web4mo.whatsgoingon.response.Response;
 
-import static org.springframework.http.HttpStatus.OK;
 import static web4mo.whatsgoingon.response.Message.*;
 import static web4mo.whatsgoingon.response.Response.success;
 
-@Tag(name = "Scrap Controller")
 @RestController
-@AllArgsConstructor
-@RequestMapping(value="/mypage")
+@RequiredArgsConstructor
+@Tag(name = "Scrap Controller")
 public class ScrapController {
-
-    @GetMapping("/scrapList")
-    @ResponseStatus(OK)
-    public Response getFolderList(@RequestBody String sortingMethod){
-        List<FolderResponseDto>
-        return success(FOLDER_LIST);
+    private final ScrapService scrapService;
+    @PostMapping()
+    public Response scraping(Long articleId, Long folderId){
+        scrapService.scraping(articleId, folderId);
+        return success(SCRAPING);
     }
+
 }
