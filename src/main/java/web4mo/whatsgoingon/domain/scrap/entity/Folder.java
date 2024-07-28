@@ -2,10 +2,8 @@ package web4mo.whatsgoingon.domain.scrap.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import web4mo.whatsgoingon.BaseTime;
+import web4mo.whatsgoingon.domain.BaseTime;
 import web4mo.whatsgoingon.domain.user.entity.Member;
-
-import java.time.LocalDateTime;
 
 
 @Getter

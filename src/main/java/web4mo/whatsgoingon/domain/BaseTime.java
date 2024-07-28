@@ -1,4 +1,4 @@
-package web4mo.whatsgoingon;
+package web4mo.whatsgoingon.domain;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

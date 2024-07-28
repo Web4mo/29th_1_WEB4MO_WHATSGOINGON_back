@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import web4mo.whatsgoingon.BaseTime;
+import web4mo.whatsgoingon.domain.BaseTime;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 
 
