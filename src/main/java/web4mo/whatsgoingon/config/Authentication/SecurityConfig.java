@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -23,14 +24,16 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] LIST = {
-            "/",
+            "/home",
             "/swagger-ui/index.html",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/api-docs/**",
             "/v3/api-docs/**",
             "/auth/signup/**",
-            "/auth/login"
+            "/auth/login",
+            "/logout",
+            "/reissue"
     };
 
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -45,6 +48,12 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
         http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.logout((logoutConfig) ->
+                        logoutConfig.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .logoutSuccessUrl("/home")
+                                .deleteCookies("remember-me")
+        );
 
         http.exceptionHandling((exception)-> exception
                 .accessDeniedHandler(jwtAccessDeniedHandler)

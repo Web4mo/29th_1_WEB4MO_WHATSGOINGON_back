@@ -1,22 +1,24 @@
 package web4mo.whatsgoingon.domain.user.service;
 
-import com.sun.net.httpserver.Authenticator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import web4mo.whatsgoingon.config.Authentication.JwtAuthenticationFilter;
 import web4mo.whatsgoingon.config.Authentication.JwtTokenProvider;
 import web4mo.whatsgoingon.domain.user.dto.LogInRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.SignUpRequestDto;
 import web4mo.whatsgoingon.domain.user.dto.TokenDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.entity.RefreshToken;
+import web4mo.whatsgoingon.domain.user.repository.RefreshTokenRepository;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+
+    @Autowired
+    private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -79,7 +84,6 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
 
-
         //실제 인증
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
@@ -92,53 +96,71 @@ public class UserService {
         if(!authentication.isAuthenticated())
             log.info("인증 실패");
         String userId= authentication.getName();
-        log.info("loginId"+userId);
+        log.info("loginId: "+userId);
 
-        //log.info("인증: "+String.valueOf(authentication));
         //인증 정보 기반으로 jwt 토큰 생성
-
         TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info(getCurrentMember().getLoginId());
-//        RefreshToken.builder()
-//                .userId(logInRequestDto.getLoginId())
-//                .refreshToken(tokenDto.getRefreshToken());
+
+        RefreshToken refreshToken= RefreshToken.builder()
+                .userId(logInRequestDto.getLoginId())
+                .refreshToken(tokenDto.getRefreshToken())
+                .grantAuthority(authentication.getAuthorities().toString()).build();
+        refreshTokenRepository.save(refreshToken);
         return tokenDto;
     }
 
     //refresh 토큰 재발급
+    @Transactional
     public TokenDto tokenReissue(TokenDto tokenDto){
+        //JwtAuthenticationFilter jwtAuthenticationFilter=new JwtAuthenticationFilter(jwtTokenProvider);
+        //jwtAuthenticationFilter.doFilter();
         String refreshToken =tokenDto.getRefreshToken();
         Authentication authentication=jwtTokenProvider.getAuthentication(refreshToken);
-        //String userId= authentication.getName();
+        String userId= authentication.getName();
 
-        //log.info("loginId"+userId);
+        log.info("loginId: "+userId);
         if(StringUtils.hasText(refreshToken ) && jwtTokenProvider.validateToken(refreshToken)){
             log.info("getting new access Token");
-            String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
-            return TokenDto.builder()
-                    .accessToken(newAccessToken)
-                    .refreshToken(refreshToken)
-                    .build();
+//            String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
+//            return TokenDto.builder()
+//                    .accessToken(newAccessToken)
+//                    .refreshToken(refreshToken)
+//                    .userId(userId)
+//                    .build();
+            return jwtTokenProvider.generateTokenDto(authentication);
         }else { //refresh token 만료
-            //refreshTokenRepository.deleteByEmail(email);
+            refreshTokenRepository.deleteByUserId(userId);
             //RT 만료됐다는걸 알리는 예외 발생 -> 로그인으로 유도
-            //throw new RefreshTokenExpired();
+            throw new IllegalStateException("Refresh token 만료됨");
         }
-
-        return tokenDto;
     }
 
     //로그아웃
-    public void logout(String userId, String accessToken){
-
+    @Transactional
+    public void logout(String token){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        log.info(token+"이 로그아웃중입니다...");
+        if(authentication==null || authentication.isAuthenticated()){
+            throw new RuntimeException("no authicated user found");
+        }
+        SecurityContextHolder.clearContext();
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        responseHeaders.add("Authorization", "");
+        //Member member=getCurrentMember();
+        String member=authentication.getName();
+        refreshTokenRepository.deleteByUserId(member);
+        log.info(member+"이 로그아웃했습니다.");
     }
 
     //회원 찾기
     public Member getCurrentMember() {
 
-        String user =String.valueOf(SecurityContextHolder.getContext().getAuthentication().getName());
-        Optional<Member> member = userRepository.findByLoginId(user);
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        if(authentication==null || authentication.isAuthenticated()){
+            throw new RuntimeException("no authicated user found");
+        }
+        Optional<Member> member=userRepository.findByLoginId(authentication.getName());
         if(member.isEmpty()) {
             throw new IllegalStateException("회원이 없습니다.");
         }

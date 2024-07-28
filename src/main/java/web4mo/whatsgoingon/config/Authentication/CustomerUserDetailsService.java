@@ -47,17 +47,10 @@ public class CustomerUserDetailsService implements UserDetailsService {
         return  User.builder()
                 .username(member.getLoginId())
                 .password(passwordEncoder.encode(member.getPassword()))
-                .authorities(new SimpleGrantedAuthority(member.getRole().toString()).toString())
+                .authorities(grantedAuthority)
                 .build();
     }
 
-//    @Override
-//    public Collection<?> extends GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> listRole = new ArrayList<GrantedAuthority>();
-//
-//        listRole.add(new SimpleGrantedAuthority(toString(Role.User))); // this is the problematic line!
-//        return listRole;
-//    }
 }
 
 

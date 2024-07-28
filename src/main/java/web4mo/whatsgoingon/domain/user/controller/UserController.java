@@ -36,17 +36,17 @@ public class UserController {
         return success("Test success");
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(){
         return "Home";
     }
-
 
     //회원가입
     @PostMapping("/auth/signup")
     public Response signup(@RequestBody SignUpRequestDto userFormDTO){
         userService.signup(userFormDTO);
-       return success(SIGN_UP);
+        Member member=userService.getCurrentMember();
+       return success(SIGN_UP,member);
     }
 
 
@@ -57,21 +57,22 @@ public class UserController {
         TokenDto jwtToken = userService.login(logInRequestDto);
         log.info("jwtToken accessToken="+jwtToken.getAccessToken());
 
+        //log.info();
         return success(LOG_IN,jwtToken);
     }
 
-//    //엑세스 토큰 재발급
-//    @PatchMapping("/auth/login")
-//    public Response reIssue(@RequestBody TokenDto tokenDto){
-//        userService.tokenReissue(tokenDto);
-//        return success("Reissue Success");
-//    }
+    //엑세스 토큰 재발급
+    @PatchMapping("/reissue")
+    public Response reIssue(@RequestBody TokenDto tokenDto){
+        userService.tokenReissue(tokenDto);
+        return success("Reissue Success");
+    }
 
     //test
     @GetMapping ("/test/currentMemberLoginID")
     public ResponseEntity<?> test1(){
         Member currentMember=userService.getCurrentMember();
-        return ResponseEntity.ok("getCurrentMemberTest Success"+"/CurrentMember:"+currentMember.getLoginId());
+        return ResponseEntity.ok("getCurrentMemberTest Success"+"/CurrentMember:"+currentMember);
     }
     @GetMapping("/test/totalMembers")
     public  ResponseEntity<?> test2() {
@@ -79,11 +80,16 @@ public class UserController {
     }
 
     //로그아웃
-//    @PostMapping("/logout")
-//    public Response logout(@RequestHeader("Authrization") String token){
-//
-//        return success(LOG_OUT);
-//    }
+    @PostMapping("/logout")
+    public Response logout(@RequestHeader("Authrization") String token){
+        log.info("로그아웃 진행중 ..");
+        userService.logout(token);
+        log.info("로그아웃 성공");
+//        String currentMember=userService.getCurrentMember();
+//        log.info("currentUser: "+currentMember);
+//        userService.logout(currentMember);
+        return success(LOG_OUT);
+    }
 
 
 

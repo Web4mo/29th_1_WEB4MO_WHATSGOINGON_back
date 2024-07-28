@@ -23,6 +23,9 @@ public class RefreshToken {
     @Column(name="user_id", nullable = false)
     private String userId;
 
+    @Column(name = "grant_authority")
+    private String grantAuthority;
+
 
 //    public void updateRefreshToken(String token) {
 //        this.refreshToken = token;
