@@ -21,17 +21,17 @@ public class ProfileController {
 
     private final ProfileService ProfileService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{loginId}")
     @ResponseStatus(OK)
-    public Response getProfile(@PathVariable Long id) {
-        ProfileDto profileDTO = ProfileService.getProfileById(id);
+    public Response getProfile(@PathVariable String loginId) {
+        ProfileDto profileDTO = ProfileService.getProfileById(loginId);
         return success(FETCH_PROFILE, profileDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{loginId}")
     @ResponseStatus(OK)
-    public Response updateProfile(@PathVariable Long id, @RequestBody ProfileDto profileDto) {
-        ProfileDto updatedProfile = ProfileService.updateProfile(id, profileDto);
+    public Response updateProfile(@PathVariable String loginId, @RequestBody ProfileDto profileDto) {
+        ProfileDto updatedProfile = ProfileService.updateProfile(loginId, profileDto);
         return success(UPDATE_PROFILE, updatedProfile);
     }
 }

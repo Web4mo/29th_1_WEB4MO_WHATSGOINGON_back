@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import web4mo.whatsgoingon.domain.mypage.profile.entity.Profile;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<Profile, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, String> {
 
 }

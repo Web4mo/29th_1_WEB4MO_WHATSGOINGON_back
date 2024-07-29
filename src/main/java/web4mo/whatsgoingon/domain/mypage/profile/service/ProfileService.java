@@ -15,13 +15,13 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public ProfileDto getProfileById(Long id) {
-        Optional<Profile> profileOpt = profileRepository.findById(id);
+    public ProfileDto getProfileById(String loginId) {
+        Optional<Profile> profileOpt = profileRepository.findById(loginId);
         if (profileOpt.isPresent()) {
             Profile profile = profileOpt.get();
             ProfileDto profileDTO = new ProfileDto();
             profileDTO.setName(profile.getName());
-            profileDTO.setId(profile.getId().toString());
+            profileDTO.setLoginId(profile.getLoginId());
             profileDTO.setUserType(profile.getUserType());
             profileDTO.setAssignDate(profile.getAssignDate().toString());
             profileDTO.setInterests(profile.getInterests());
@@ -34,20 +34,20 @@ public class ProfileService {
         }
     }
 
-    public ProfileDto updateProfile(Long id, ProfileDto profileDto) {
-        Optional<Profile> profileOpt = profileRepository.findById(id);
-        if (profileOpt.isPresent()) {
-            Profile profile = profileOpt.get();
-            profile.setUserType(profileDto.getUserType());
-            profile.setInterests(profileDto.getInterests());
-            profile.setKeywords(profileDto.getKeywords());
-            profile.setMedia(profileDto.getMedia());
-
-            profileRepository.save(profile);
-
-            return profileDto;
-        } else {
-            throw new RuntimeException("Profile not found");
-        }
-    }
+//    public ProfileDto updateProfile(String loginId, ProfileDto profileDto) {
+//        Optional<Profile> profileOpt = profileRepository.findById(loginId);
+//        if (profileOpt.isPresent()) {
+//            Profile profile = profileOpt.get();
+//            profile.setUserType(profileDto.getUserType());
+//            profile.setInterests(profileDto.getInterests());
+//            profile.setKeywords(profileDto.getKeywords());
+//            profile.setMedia(profileDto.getMedia());
+//
+//            profileRepository.save(profile);
+//
+//            return profileDto;
+//        } else {
+//            throw new RuntimeException("Profile not found");
+//        }
+//    }
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 public class ProfileDto {
     // Getters and setters
     private String name;
-    private String id;
+    private String loginId;
     private String userType;
     private String assignDate;
     private Set<String> interests;
