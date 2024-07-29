@@ -28,10 +28,10 @@ public class ProfileController {
         return success(FETCH_PROFILE, profileDTO);
     }
 
-    @PutMapping("/{loginId}")
-    @ResponseStatus(OK)
-    public Response updateProfile(@PathVariable String loginId, @RequestBody ProfileDto profileDto) {
-        ProfileDto updatedProfile = ProfileService.updateProfile(loginId, profileDto);
-        return success(UPDATE_PROFILE, updatedProfile);
-    }
+//    @PutMapping("/{loginId}")
+//    @ResponseStatus(OK)
+//    public Response updateProfile(@PathVariable String loginId, @RequestBody ProfileDto profileDto) {
+//        ProfileDto updatedProfile = ProfileService.updateProfile(loginId, profileDto);
+//        return success(UPDATE_PROFILE, updatedProfile);
+//    }
 }
