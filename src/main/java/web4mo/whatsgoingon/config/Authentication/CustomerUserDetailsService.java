@@ -42,12 +42,13 @@ public class CustomerUserDetailsService implements UserDetailsService {
 
     private UserDetails createUserDetails(Member member){
         log.info("리포지토리에서 userid: "+ userRepository.findByLoginId(member.getLoginId()).get().getLoginId());
-        log.info("member.role: "+userRepository.findByLoginId(member.getLoginId()).get().getRole());
-        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority(member.getRole().name());
+        log.info("member.role: "+member.getRole().toString());
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ROLE_"+member.getRole().toString());
+        log.info(grantedAuthority.getAuthority());
         return  User.builder()
                 .username(member.getLoginId())
                 .password(passwordEncoder.encode(member.getPassword()))
-                .authorities(grantedAuthority)
+                .authorities(grantedAuthority.toString())
                 .build();
     }
 

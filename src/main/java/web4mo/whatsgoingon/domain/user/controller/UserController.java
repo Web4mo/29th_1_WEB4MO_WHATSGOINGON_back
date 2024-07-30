@@ -45,8 +45,8 @@ public class UserController {
     @PostMapping("/auth/signup")
     public Response signup(@RequestBody SignUpRequestDto userFormDTO){
         userService.signup(userFormDTO);
-        Member member=userService.getCurrentMember();
-       return success(SIGN_UP,member);
+        //Member member=userService.getCurrentMember();
+       return success(SIGN_UP);
     }
 
 
@@ -68,12 +68,6 @@ public class UserController {
         return success("Reissue Success");
     }
 
-    //test
-    @GetMapping ("/test/currentMemberLoginID")
-    public ResponseEntity<?> test1(){
-        Member currentMember=userService.getCurrentMember();
-        return ResponseEntity.ok("getCurrentMemberTest Success"+"/CurrentMember:"+currentMember);
-    }
     @GetMapping("/test/totalMembers")
     public  ResponseEntity<?> test2() {
         return ResponseEntity.ok("findAll Success" + userService.findAll());
@@ -81,7 +75,7 @@ public class UserController {
 
     //로그아웃
     @PostMapping("/logout")
-    public Response logout(@RequestHeader("Authrization") String token){
+    public Response logout(@RequestHeader("Authorization") String token){
         log.info("로그아웃 진행중 ..");
         userService.logout(token);
         log.info("로그아웃 성공");

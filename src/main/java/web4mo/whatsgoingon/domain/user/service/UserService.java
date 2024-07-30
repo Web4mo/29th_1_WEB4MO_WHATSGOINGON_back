@@ -88,33 +88,36 @@ public class UserService {
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(logInRequestDto.getLoginId(),logInRequestDto.getPassword());
-        log.info("인증토큰: "+String.valueOf(authenticationToken));
-        log.info("logInRequestDto.getLoginId(),logInRequestDto.getPassword() : "+logInRequestDto.getLoginId(),logInRequestDto.getPassword());
-        // 2. 실제 검증. authenticate() 메서드를 통해 요청된 Member 에 대한 검증 진행
+         // 2. 실제 검증. authenticate() 메서드를 통해 요청된 Member 에 대한 검증 진행
         // authenticate 메서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드 실행
         Authentication authentication=authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         if(!authentication.isAuthenticated())
             log.info("인증 실패");
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String userId= authentication.getName();
         log.info("loginId: "+userId);
 
         //인증 정보 기반으로 jwt 토큰 생성
         TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         RefreshToken refreshToken= RefreshToken.builder()
                 .userId(logInRequestDto.getLoginId())
                 .refreshToken(tokenDto.getRefreshToken())
                 .grantAuthority(authentication.getAuthorities().toString()).build();
-        refreshTokenRepository.save(refreshToken);
+        if (! refreshTokenRepository.existsByUserId(userId)){
+            refreshTokenRepository.save(refreshToken);
+        }
+        else {
+            refreshTokenRepository.findByUserId(userId).updateRefreshToken(tokenDto.getRefreshToken());
+            //refreshTokenRepository.findByUserId(userId).updateRefreshToken("login");
+        }
         return tokenDto;
     }
 
     //refresh 토큰 재발급
     @Transactional
     public TokenDto tokenReissue(TokenDto tokenDto){
-        //JwtAuthenticationFilter jwtAuthenticationFilter=new JwtAuthenticationFilter(jwtTokenProvider);
-        //jwtAuthenticationFilter.doFilter();
         String refreshToken =tokenDto.getRefreshToken();
         Authentication authentication=jwtTokenProvider.getAuthentication(refreshToken);
         String userId= authentication.getName();
@@ -122,16 +125,15 @@ public class UserService {
         log.info("loginId: "+userId);
         if(StringUtils.hasText(refreshToken ) && jwtTokenProvider.validateToken(refreshToken)){
             log.info("getting new access Token");
-//            String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
-//            return TokenDto.builder()
-//                    .accessToken(newAccessToken)
-//                    .refreshToken(refreshToken)
-//                    .userId(userId)
-//                    .build();
-            return jwtTokenProvider.generateTokenDto(authentication);
+            String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
+            return TokenDto.builder()
+                    .accessToken(newAccessToken)
+                    .refreshToken(refreshToken)
+                    .userId(userId)
+                    .build();
         }else { //refresh token 만료
             refreshTokenRepository.deleteByUserId(userId);
-            //RT 만료됐다는걸 알리는 예외 발생 -> 로그인으로 유도
+            //RT 만료됐다는걸 알리는 예외 발생 ->  home으로 유도
             throw new IllegalStateException("Refresh token 만료됨");
         }
     }
@@ -139,25 +141,24 @@ public class UserService {
     //로그아웃
     @Transactional
     public void logout(String token){
-        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-        log.info(token+"이 로그아웃중입니다...");
-        if(authentication==null || authentication.isAuthenticated()){
-            throw new RuntimeException("no authicated user found");
-        }
+
+        log.info(getCurrentMember().getLoginId()+"이 로그아웃 중입니다.");
         SecurityContextHolder.clearContext();
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        responseHeaders.add("Authorization", "");
-        //Member member=getCurrentMember();
-        String member=authentication.getName();
-        refreshTokenRepository.deleteByUserId(member);
-        log.info(member+"이 로그아웃했습니다.");
+        log.info("현재 security확인: "+SecurityContextHolder.getContext());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Authorization", "");
+
     }
 
     //회원 찾기
     public Member getCurrentMember() {
 
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-        if(authentication==null || authentication.isAuthenticated()){
+        log.info("현재 인증 유저확인: "+authentication.getName());
+        if(authentication==null){
+            throw new RuntimeException("authotication is null");
+        }
+        if( !authentication.isAuthenticated()){
             throw new RuntimeException("no authicated user found");
         }
         Optional<Member> member=userRepository.findByLoginId(authentication.getName());

@@ -27,7 +27,8 @@ public class RefreshToken {
     private String grantAuthority;
 
 
-//    public void updateRefreshToken(String token) {
-//        this.refreshToken = token;
-//    }
+    public void updateRefreshToken(String token) {
+        this.refreshToken = token;
+    }
+
 }
