@@ -18,20 +18,25 @@ import static web4mo.whatsgoingon.response.Response.success;
 @RequiredArgsConstructor
 @RequestMapping("/api/profile")
 public class ProfileController {
-
     private final ProfileService ProfileService;
 
     @GetMapping("/{loginId}")
     @ResponseStatus(OK)
     public Response getProfile(@PathVariable String loginId) {
-        ProfileDto profileDTO = ProfileService.getProfileById(loginId);
+        ProfileDto profileDTO = ProfileService.getProfileByLoginId(loginId);
         return success(FETCH_PROFILE, profileDTO);
     }
+//    @GetMapping("/{id}")
+//    @ResponseStatus(OK)
+//    public Response getProfile(@PathVariable Long id) {
+//        ProfileDto profileDTO = ProfileService.getProfileById(id);
+//        return success(FETCH_PROFILE, profileDTO);
+//    }
 
 //    @PutMapping("/{loginId}")
 //    @ResponseStatus(OK)
 //    public Response updateProfile(@PathVariable String loginId, @RequestBody ProfileDto profileDto) {
-//        ProfileDto updatedProfile = ProfileService.updateProfile(loginId, profileDto);
+//        ProfileDto updatedProfile = ProfileService.updateProfile(String loginId, profileDto);
 //        return success(UPDATE_PROFILE, updatedProfile);
 //    }
 }
