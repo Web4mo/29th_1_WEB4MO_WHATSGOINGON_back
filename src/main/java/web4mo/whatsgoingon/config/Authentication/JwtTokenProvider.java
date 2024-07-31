@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
     private final Key key;
     private final CustomerUserDetailsService customerUserDetailsService;
-    private static final long EXPIRE_TIME=1000*60; //1분
-    private static final long REFRESH_EXPIRE_TIME=10*60*60*24*3; //3일
+    private static final long EXPIRE_TIME=1000*60*60; //1시간
+    private static final long REFRESH_EXPIRE_TIME=1000*60*60*24; //1일
 
     public JwtTokenProvider(@Value("${jwt.secrete}") String secretKey, CustomerUserDetailsService customUserDetailsService, CustomerUserDetailsService customerUserDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);

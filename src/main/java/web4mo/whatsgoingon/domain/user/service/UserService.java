@@ -31,21 +31,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
-    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-
     private final FolderRepository folderRepository;
 
     /*
     *회원가입
      */
     @Transactional
-    public String signup(SignUpRequestDto signUpRequestDto){
+    public Member signup(SignUpRequestDto signUpRequestDto){
         validateDuplicateUser(signUpRequestDto.getLoginId());
         isPasswordMatching(signUpRequestDto.getPassword(), signUpRequestDto.getConfirmPassword());
 
@@ -55,7 +52,8 @@ public class UserService {
                 .name("기본 폴더").build();
 
         folderRepository.save(folder);
-        return userRepository.save(member).getLoginId();
+        userRepository.save(member);
+        return userRepository.save(member);
     }
 
     //loginId 중복 체크
@@ -67,8 +65,6 @@ public class UserService {
 
     //비밀번호 일치 확인
     private void isPasswordMatching(String password1, String password2){
-        log.info("pw:"+password1);
-        log.info("confrimpw: "+password2);
         if (password1 == null){
             throw new IllegalStateException("비밀번호가 없습니다.");
         }
@@ -76,8 +72,6 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
     }
-
-
 
     /*
      *로그인
@@ -94,7 +88,6 @@ public class UserService {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
 
-        //실제 인증
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(logInRequestDto.getLoginId(),logInRequestDto.getPassword());
@@ -103,14 +96,12 @@ public class UserService {
         Authentication authentication=authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         if(!authentication.isAuthenticated())
             log.info("인증 실패");
-        //SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String userId= authentication.getName();
-        log.info("loginId: "+userId);
 
         //인증 정보 기반으로 jwt 토큰 생성
         TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
-
         RefreshToken refreshToken= RefreshToken.builder()
                 .userId(logInRequestDto.getLoginId())
                 .refreshToken(tokenDto.getRefreshToken())
@@ -120,19 +111,17 @@ public class UserService {
         }
         else {
             refreshTokenRepository.findByUserId(userId).updateRefreshToken(tokenDto.getRefreshToken());
-            //refreshTokenRepository.findByUserId(userId).updateRefreshToken("login");
         }
         return tokenDto;
     }
 
-    //refresh 토큰 재발급
+    //access, refresh 토큰 재발급
     @Transactional
     public TokenDto tokenReissue(TokenDto tokenDto){
         String refreshToken =tokenDto.getRefreshToken();
         Authentication authentication=jwtTokenProvider.getAuthentication(refreshToken);
         String userId= authentication.getName();
 
-        log.info("loginId: "+userId);
         if(StringUtils.hasText(refreshToken ) && jwtTokenProvider.validateToken(refreshToken)){
             log.info("getting new access Token");
             String newAccessToken = jwtTokenProvider.createAccessToken(authentication);
@@ -154,7 +143,6 @@ public class UserService {
 
         log.info(getCurrentMember().getLoginId()+"이 로그아웃 중입니다.");
         SecurityContextHolder.clearContext();
-        log.info("현재 security확인: "+SecurityContextHolder.getContext());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Authorization", "");
 
@@ -164,11 +152,7 @@ public class UserService {
     public Member getCurrentMember() {
 
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-        log.info("현재 인증 유저확인: "+authentication.getName());
-        if(authentication==null){
-            throw new RuntimeException("authotication is null");
-        }
-        if( !authentication.isAuthenticated()){
+        if( authentication==null||!authentication.isAuthenticated()){
             throw new RuntimeException("no authicated user found");
         }
         Optional<Member> member=userRepository.findByLoginId(authentication.getName());
@@ -187,6 +171,4 @@ public class UserService {
         }
         return memberList;
     }
-
-
 }

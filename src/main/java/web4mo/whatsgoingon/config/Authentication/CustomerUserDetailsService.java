@@ -33,18 +33,13 @@ public class CustomerUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        log.info("loginID:"+username);
-        //Member member=userRepository.findByLoginId(username).get();
         return userRepository.findByLoginId(username)
                 .map(this::createUserDetails)
                 .orElseThrow(()-> new UsernameNotFoundException("해당하는 회원을 찾을 수 없습니다."));
     }
 
     private UserDetails createUserDetails(Member member){
-        log.info("리포지토리에서 userid: "+ userRepository.findByLoginId(member.getLoginId()).get().getLoginId());
-        log.info("member.role: "+member.getRole().toString());
         GrantedAuthority grantedAuthority=new SimpleGrantedAuthority("ROLE_"+member.getRole().toString());
-        log.info(grantedAuthority.getAuthority());
         return  User.builder()
                 .username(member.getLoginId())
                 .password(passwordEncoder.encode(member.getPassword()))
