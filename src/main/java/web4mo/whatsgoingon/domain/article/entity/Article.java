@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import web4mo.whatsgoingon.domain.BaseTime;
 import web4mo.whatsgoingon.domain.category.entity.Keyword;
 import web4mo.whatsgoingon.domain.scrap.entity.Scrap;
 
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Article {
+public class Article extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "article_id")
@@ -36,10 +37,6 @@ public class Article {
 
     @Column(updatable = false)
     private LocalDate pubDate;
-
-    @CreatedDate
-    @Column(name = "updated_at")
-    private LocalDate updatedAt;
 
     @Column
     private boolean crawling;

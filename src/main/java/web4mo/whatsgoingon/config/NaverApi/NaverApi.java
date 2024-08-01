@@ -40,7 +40,7 @@ public class NaverApi {
         return gson.fromJson(itemsArray, listType);
     }
 
-    private List<articleApiDto> naverApiResearch(String query, int display, String sort){
+    public List<articleApiDto> naverApiResearch(String query, int display, String sort){
         String clientId = "bEN9b9S5f29hb9uLIAwk";
         String clientSecret = "7qhxwNjo7b";
 
