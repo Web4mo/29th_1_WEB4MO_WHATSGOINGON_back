@@ -22,16 +22,11 @@ public class ProfileController {
 
     @GetMapping("/{loginId}")
     @ResponseStatus(OK)
-    public Response getProfile(@PathVariable String loginId) {
-        ProfileDto profileDTO = ProfileService.getProfileByLoginId(loginId);
+    public Response getProfile() {
+        ProfileDto profileDTO = ProfileService.getProfile();
         return success(FETCH_PROFILE, profileDTO);
     }
-//    @GetMapping("/{id}")
-//    @ResponseStatus(OK)
-//    public Response getProfile(@PathVariable Long id) {
-//        ProfileDto profileDTO = ProfileService.getProfileById(id);
-//        return success(FETCH_PROFILE, profileDTO);
-//    }
+
 
 //    @PutMapping("/{loginId}")
 //    @ResponseStatus(OK)

@@ -1,61 +1,26 @@
 package web4mo.whatsgoingon.domain.mypage.profile.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import web4mo.whatsgoingon.domain.mypage.profile.dto.ProfileDto;
-import web4mo.whatsgoingon.domain.mypage.profile.entity.Profile;
-import web4mo.whatsgoingon.domain.mypage.profile.repository.ProfileRepository;
-import java.util.Optional;
+import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.service.UserService;
+
 
 @Service
+@AllArgsConstructor
 public class ProfileService {
-    private final ProfileRepository profileRepository;
+    private final UserService userService;
 
-    @Autowired
-    public ProfileService(ProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
+
+    public ProfileDto getProfile() {
+        Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
+        return ProfileDto.builder()
+                .id(member.getId()).name(member.getName()).loginId(member.getLoginId())
+                .userType(member.getType()).assignAt(member.getAssignAt())
+                .interests(null).keywords(null).media(null)
+                .profileImg(member.getProfileImg()).build();
     }
-
-    // loginId를 파라미터로
-    public ProfileDto getProfileByLoginId(String loginId) {
-        Optional<Profile> profileOpt = profileRepository.findByLoginId(loginId);
-        if (profileOpt.isPresent()) {
-            Profile profile = profileOpt.get();
-            ProfileDto profileDTO = new ProfileDto();
-            profileDTO.setName(profile.getName());
-            profileDTO.setLoginId(profile.getLoginId());
-            profileDTO.setUserType(profile.getUserType());
-            //profileDTO.setAssignDate(profile.getAssignDate().toString());
-            profileDTO.setInterests(profile.getInterests());
-            profileDTO.setKeywords(profile.getKeywords());
-            profileDTO.setMedia(profile.getMedia());
-            profileDTO.setProfileImg(profile.getProfileImg());
-            return profileDTO;
-        } else {
-            throw new RuntimeException("Profile not found");
-        }
-    }
-
-    // id를 파라미터로
-//    public ProfileDto getProfileById(Long id) {
-//        Optional<Profile> profileOpt = profileRepository.findById(id);
-//        if (profileOpt.isPresent()) {
-//            Profile profile = profileOpt.get();
-//            ProfileDto profileDTO = new ProfileDto();
-//            profileDTO.setName(profile.getName());
-//            profileDTO.setLoginId(profile.getLoginId());
-//            profileDTO.setUserType(profile.getUserType());
-//            //profileDTO.setAssignDate(profile.getAssignDate().toString());
-//            profileDTO.setInterests(profile.getInterests());
-//            profileDTO.setKeywords(profile.getKeywords());
-//            profileDTO.setMedia(profile.getMedia());
-//            profileDTO.setProfileImg(profile.getProfileImg());
-//            return profileDTO;
-//        } else {
-//            throw new RuntimeException("Profile not found");
-//        }
-//    }
-
 
 
 //    public ProfileDto updateProfile(Long id, ProfileDto profileDto) {
