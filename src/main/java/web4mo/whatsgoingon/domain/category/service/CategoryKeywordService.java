@@ -13,10 +13,7 @@ import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordReposit
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.lang.constant.ConstantDescs.NULL;
 
@@ -82,6 +79,15 @@ public class CategoryKeywordService {
             categories.add(keyword.getCategory());
         }
         return categories;
+    }
+
+    //유저가 선택한 카테고리 개수 가져오기
+    public int userCategoryCount(Member member) {
+        Set<Category> uniqueCategories = new HashSet<>();
+        for (UserCategoryKeyword keyword : userCategoryKeywordRepository.findByMember(member)) {
+            uniqueCategories.add(keyword.getCategory());
+        }
+        return uniqueCategories.size();
     }
 
     //언론사 저장하기

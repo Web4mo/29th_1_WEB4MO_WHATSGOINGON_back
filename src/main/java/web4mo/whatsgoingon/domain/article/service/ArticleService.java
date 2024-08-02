@@ -1,32 +1,41 @@
 package web4mo.whatsgoingon.domain.article.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import web4mo.whatsgoingon.config.CrawlingService;
 import web4mo.whatsgoingon.config.NaverApi.NaverApi;
+import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
+import web4mo.whatsgoingon.domain.category.repository.MediaUserRepository;
+import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
 import web4mo.whatsgoingon.config.NaverApi.articleApiDto;
 import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.repository.ArticleRepository;
+import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.service.UserService;
+import web4mo.whatsgoingon.response.Response;
 
 import java.time.*;
 
 import java.io.IOException;
 import java.time.format.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
 
-    @Autowired
-    private NaverApi naverApi; // 수정 - 의존성
+    private final UserService userService;
+    private final UserCategoryKeywordRepository userCategoryKeywordRepository;
 
     @Autowired
-    private CrawlingService crawlingService;
+    private NaverApi naverApi; // 수정 - 의존성
 
     public List<ArticleDto> getArticles(String query, int count, String sort) {
         List<articleApiDto> apiArticles = naverApi.naverApiResearch(query, count, sort);
@@ -34,6 +43,7 @@ public class ArticleService {
         // API 데이터를 엔티티로 변환
         List<Article> articleEntities = apiArticles.stream()
                 .map(this::convertToEntity)
+                .filter(article -> article.getUrl().startsWith("https://n.news.naver.com"))
                 .collect(Collectors.toList());
 
         articleRepository.saveAll(articleEntities);
@@ -54,7 +64,7 @@ public class ArticleService {
                 .img(article.getImg())
                 .pubDate(article.getPubDate())
                 .crawling(article.isCrawling())
-                //.keyword(article.getKeyword())
+                .category(article.getKeyword())
                 .build();
     }
 
@@ -69,15 +79,10 @@ public class ArticleService {
 
         return Article.builder()
                 .title(article.getTitle())
-                .url(article.getOriginallink())
+                .url(article.getLink())
                 .img(article.getLink())
+                //.keyword(findByMember(Member))
                 .pubDate(pubDate)
                 .build();
-    }
-
-    public String fetchArticleContent(Long articleId) throws IOException {
-        Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + articleId));
-        return crawlingService.fetchArticleContent(article.getUrl());
     }
 }

@@ -11,6 +11,10 @@ public class Message {
     public static String SAVE_CATEGORY = "카테고리 키워드 저장 성공했습니다.";
     public static String SAVE_MEDIA ="언론사 저장 성공했습니다.";
 
+    // ArticleController
+    public static String CONTENT_MAIN = "기사 전문 불러오기 성공했습니다.";
+    public static String GET_MAIN = "기사 리스트 불러오기 성공했습니다.";
+
 
     // FolderController
     public static String FOLDER_LIST = "폴더 목록 불러오기 성공했습니다";
