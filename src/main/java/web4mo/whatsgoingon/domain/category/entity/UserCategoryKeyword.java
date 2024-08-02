@@ -22,10 +22,12 @@ public class UserCategoryKeyword {
     @JoinColumn(name = "user_id",nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "keyword_id",nullable = false)
-    private Keyword keyword;
+    @Column(name = "keyword")
+    private String keyword;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Category category;
 
 
 }

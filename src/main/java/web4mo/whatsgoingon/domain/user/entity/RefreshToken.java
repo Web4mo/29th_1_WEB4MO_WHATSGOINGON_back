@@ -21,7 +21,6 @@ public class RefreshToken extends BaseTime {
     @Column(name="refresh_token", nullable = false)
     private String refreshToken;
 
-
     @Column(name="user_id", nullable = false)
     private String userId;
 

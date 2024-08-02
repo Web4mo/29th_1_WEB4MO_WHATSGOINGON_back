@@ -2,6 +2,10 @@ package web4mo.whatsgoingon.domain.category.entity;
 
 import lombok.Getter;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Getter
 public enum Category {
     //정치/경제/사회/ 생활 문화/ IT과학/ 세계/스포츠/연예
@@ -19,5 +23,20 @@ public enum Category {
     private Category(String name){
         this.name=name;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public static Category valueOfCategory(String category){
+        for(Category label: values()){
+            if(label.getName().equals(category)){
+                return label;
+            }
+        }
+        throw new IllegalStateException("없는 category: " + category);
+    }
+
+
 
 }

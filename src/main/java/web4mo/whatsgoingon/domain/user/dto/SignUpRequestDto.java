@@ -30,7 +30,7 @@ public class SignUpRequestDto {
                 .loginId(loginId)
                 .password(password)
                 .name(name)
-                .type(type)
+                .userType(type)
                 .role(Role.User)
                 .build();
     }
