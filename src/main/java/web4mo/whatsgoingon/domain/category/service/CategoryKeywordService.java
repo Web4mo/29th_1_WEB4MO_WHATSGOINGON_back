@@ -16,6 +16,8 @@ import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
 import java.util.*;
 
+import static java.lang.constant.ConstantDescs.NULL;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -93,6 +95,15 @@ public class CategoryKeywordService {
             categories.add(category.getCategory());
         }
         return categories;
+    }
+
+    //유저가 선택한 카테고리 개수 가져오기
+    public int userCategoryCount(Member member) {
+        Set<Category> uniqueCategories = new HashSet<>();
+        for (UserCategoryKeyword keyword : userCategoryKeywordRepository.findByMember(member)) {
+            uniqueCategories.add(keyword.getCategory());
+        }
+        return uniqueCategories.size();
     }
 
     //언론사 저장하기

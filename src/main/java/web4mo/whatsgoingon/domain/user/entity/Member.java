@@ -1,29 +1,19 @@
 package web4mo.whatsgoingon.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import web4mo.whatsgoingon.domain.BaseTime;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import web4mo.whatsgoingon.domain.BaseDate;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+@EntityListeners(AuditingEntityListener.class)
+public class Member extends BaseDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", length = 30, nullable = false)
@@ -31,11 +21,9 @@ public class Member {
 
     @Column
     private String loginId;
-    @Column
-    private String password;
 
     @Column
-    private LocalDateTime assignAt;
+    private String password;
 
     @Column
     private String name;

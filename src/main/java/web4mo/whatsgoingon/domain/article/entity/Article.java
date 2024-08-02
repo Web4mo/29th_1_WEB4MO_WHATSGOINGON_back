@@ -8,6 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import web4mo.whatsgoingon.domain.category.entity.KeywordUser;
 
+import web4mo.whatsgoingon.domain.BaseTime;
+import web4mo.whatsgoingon.domain.scrap.entity.Scrap;
+import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 import java.time.LocalDate;
 
 @Entity
@@ -16,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Article {
+public class Article extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "article_id")
@@ -34,16 +37,18 @@ public class Article {
     @Column(updatable = false)
     private LocalDate pubDate;
 
-    @CreatedDate
-    @Column(name = "updated_at")
-    private LocalDate updatedAt;
-
     @Column
     private boolean crawling;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
     private KeywordUser keyword;
+
+    public void updateCrawling(){
+        this.crawling = true;
+    }
+
 
 
 }

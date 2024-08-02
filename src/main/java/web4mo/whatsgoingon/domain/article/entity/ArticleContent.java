@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 public class ArticleContent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

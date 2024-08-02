@@ -33,4 +33,11 @@ public class Scrap extends BaseTime {
 
     @Column(columnDefinition = "TEXT")
     private String articleSummary;
+
+    public void memoUpdate(String memo){
+        this.memo = memo;
+    }
+    public void aiUpdate(String ai){
+        this.articleSummary = ai;
+    }
 }
