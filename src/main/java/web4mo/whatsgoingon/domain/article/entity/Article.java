@@ -10,7 +10,6 @@ import web4mo.whatsgoingon.domain.category.entity.KeywordUser;
 
 import web4mo.whatsgoingon.domain.BaseTime;
 import web4mo.whatsgoingon.domain.scrap.entity.Scrap;
-import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 import java.time.LocalDate;
 
 @Entity
