@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
@@ -39,8 +40,8 @@ public class Member {
     private Role role;
 
     @Column
-    private String profileImg;
+    private URL profileImg;
 
     @Column
-    private String type;
+    private String userType;
 }
