@@ -18,13 +18,15 @@ public class ProfileService {
     public ProfileDto getProfile() {
         Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
         return ProfileDto.builder()
-                .id(member.getId()).name(member.getName()).loginId(member.getLoginId())
-                .userType(member.getUserType()).assignAt(LocalDateTime.from(member.getAssignAt()))
+                .id(member.getId())
+                .name(member.getName())
+                .loginId(member.getLoginId())
+                .userType(member.getUserType())
+                .createAt(member.getCreatedAt())
                 .interests(null).keywords(null).media(null)
                 .profileImg(member.getProfileImg()).build();
     }
 
-//    @Transactional
 //    public ProfileDto updateProfile(ProfileDto profileDto){
 //        Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
 //        member.setType(profileDto.getUserType());
