@@ -48,7 +48,7 @@ public class ArticleService {
             pubDate = zonedDateTime.toLocalDate();
         } catch (DateTimeParseException e) {
             // 예외 처리
-            e.printStackTrace();
+            e.getStackTrace();
         }
 
         return ArticleDto.builder()
@@ -66,7 +66,7 @@ public class ArticleService {
             pubDate = zonedDateTime.toLocalDate();
         } catch (DateTimeParseException e) {
             // 예외 처리
-            e.printStackTrace();
+            e.getStackTrace();
         }
 
         return Article.builder()
