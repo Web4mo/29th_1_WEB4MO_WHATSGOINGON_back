@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import web4mo.whatsgoingon.domain.BaseTime;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RefreshToken {
+public class RefreshToken extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="refresh_token_id")
@@ -23,8 +24,12 @@ public class RefreshToken {
     @Column(name="user_id", nullable = false)
     private String userId;
 
+    @Column(name = "grant_authority")
+    private String grantAuthority;
 
-//    public void updateRefreshToken(String token) {
-//        this.refreshToken = token;
-//    }
+
+    public void updateRefreshToken(String token) {
+        this.refreshToken = token;
+    }
+
 }

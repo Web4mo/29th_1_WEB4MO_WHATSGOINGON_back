@@ -13,16 +13,16 @@ public class SignUpRequestDto {
     private String password;
     private String confirmPassword;
     private String name;
-    private String type;
+    private String userType;
 
 
     @Builder
-    public SignUpRequestDto(String loginId, String password, String confirmPassword, String name, String type){
+    public SignUpRequestDto(String loginId, String password, String confirmPassword, String name, String userType){
         this.loginId=loginId;
         this.password=password;
         this.confirmPassword=confirmPassword;
         this.name=name;
-        this.type=type;
+        this.userType=userType;
     }
 
     public Member toEntity(){
@@ -30,7 +30,7 @@ public class SignUpRequestDto {
                 .loginId(loginId)
                 .password(password)
                 .name(name)
-                .type(type)
+                .userType(userType)
                 .role(Role.User)
                 .build();
     }

@@ -19,6 +19,4 @@ public class Media {
 
     private String name;
     private String link;
-
-
 }
