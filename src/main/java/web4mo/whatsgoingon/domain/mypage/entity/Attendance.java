@@ -1,9 +1,11 @@
-package web4mo.whatsgoingon.domain.mypage.entity;
+package web4mo.whatsgoingon.domain.user.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import web4mo.whatsgoingon.domain.BaseTime;
-import web4mo.whatsgoingon.domain.user.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Entity
@@ -17,11 +19,11 @@ public class Attendance {
     @Column(name = "attendance_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @Column
+    private LocalDate attendAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Member member;
-
-    @Column(nullable = false)
-    private LocalDate attendDate;
 
 }
