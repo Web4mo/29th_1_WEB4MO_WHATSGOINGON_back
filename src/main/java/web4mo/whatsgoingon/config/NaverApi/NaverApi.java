@@ -11,40 +11,16 @@ import java.util.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NaverApi {
-
-    // naverApiResearch(검색어, 개수, 정렬 방법)
-    // date - 날짜순, sim - 정확도 순
-    // articleApiDto 들의 List 형태로 반환
-
-    // 예시 사용법
-    /*
-    public static void main(String[] args){
-        NaverApi test = new NaverApi();
-
-        List<articleApiDto> articles = test.naverApiResearch("트럽프", 2, "date");
-
-        for (articleApiDto article : articles) {
-            System.out.println(article.getTitle()); // 기사 제목들만 출력되는중
-        }
-    }
-    */
-
-    public static List<articleApiDto> parseJsonToArticles(String jsonResponse) {
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
-        JsonArray itemsArray = jsonObject.getAsJsonArray("items");
-
-        Type listType = new TypeToken<List<articleApiDto>>(){}.getType();
-        return gson.fromJson(itemsArray, listType);
-    }
 
     public List<articleApiDto> naverApiResearch(String query, int display, String sort){
         String clientId = "bEN9b9S5f29hb9uLIAwk";
         String clientSecret = "7qhxwNjo7b";
 
-        String text = null;
+        String text;
         try {
             text = URLEncoder.encode(query, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -58,6 +34,16 @@ public class NaverApi {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         return parseJsonToArticles(get(apiURL,requestHeaders));
     }
+
+    private static List<articleApiDto> parseJsonToArticles(String jsonResponse) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
+        JsonArray itemsArray = jsonObject.getAsJsonArray("items");
+
+        Type listType = new TypeToken<List<articleApiDto>>(){}.getType();
+        return gson.fromJson(itemsArray, listType);
+    }
+
     private static String get(String apiUrl, Map<String, String> requestHeaders){
         HttpURLConnection con = connect(apiUrl);
         try {
@@ -66,11 +52,10 @@ public class NaverApi {
                 con.setRequestProperty(header.getKey(), header.getValue());
             }
 
-
             int responseCode = con.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 return readBody(con.getInputStream());
-            } else { // 오류 발생
+            } else {
                 return readBody(con.getErrorStream());
             }
         } catch (IOException e) {
@@ -79,7 +64,6 @@ public class NaverApi {
             con.disconnect();
         }
     }
-
 
     private static HttpURLConnection connect(String apiUrl){
         try {
@@ -92,25 +76,20 @@ public class NaverApi {
         }
     }
 
-
     private static String readBody(InputStream body){
         InputStreamReader streamReader = new InputStreamReader(body);
-
-
         try (BufferedReader lineReader = new BufferedReader(streamReader)) {
             StringBuilder responseBody = new StringBuilder();
-
-
             String line;
             while ((line = lineReader.readLine()) != null) {
                 responseBody.append(line);
             }
-
-
             return responseBody.toString();
         } catch (IOException e) {
             throw new RuntimeException("API 응답을 읽는 데 실패했습니다.", e);
         }
     }
-
 }
+
+
+

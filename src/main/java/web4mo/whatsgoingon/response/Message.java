@@ -15,4 +15,7 @@ public class Message {
 
     // ScrapController
     public static String SCRAPING = "스크랩 성공했습니다.";
+
+    // ArticleController
+    public static String ARTICLE = "기사 불러오기 성공했습니다.";
 }

@@ -34,4 +34,6 @@ public class Response {
     public static Response failure(HttpStatus status, String msg) {
         return new Response(false, status.value(), msg, null);
     }
+
+
 }

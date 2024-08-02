@@ -2,16 +2,15 @@ package web4mo.whatsgoingon.domain.article.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import web4mo.whatsgoingon.config.CrawlingService;
 import web4mo.whatsgoingon.config.NaverApi.NaverApi;
 import web4mo.whatsgoingon.config.NaverApi.articleApiDto;
 import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.repository.ArticleRepository;
-import web4mo.whatsgoingon.domain.scrap.dto.FolderResponseDto;
-import web4mo.whatsgoingon.domain.scrap.entity.Folder;
-import web4mo.whatsgoingon.domain.user.entity.Member;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,10 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
-    private NaverApi naverApi;
+    private NaverApi naverApi; // 수정 - 의존성
+
+    @Autowired
+    private CrawlingService crawlingService;
 
     public List<ArticleDto> getArticles(String query, int count, String sort) {
         List<articleApiDto> articles = naverApi.naverApiResearch(query, count, sort);
@@ -30,31 +32,32 @@ public class ArticleService {
     }
 
     public void saveArticles(String query, int count, String sort) {
-        NaverApi test = new NaverApi();
-
-        List<articleApiDto> articles = test.naverApiResearch("트럽프", 2, "date");
-        for (articleApiDto article : articles) {
-            System.out.println(article.getTitle()); // 기사 제목들만 출력되는중
-        }
+        List<articleApiDto> articles = naverApi.naverApiResearch(query, count, sort);
+        List<Article> articleEntities = articles.stream().map(this::convertToEntity).collect(Collectors.toList());
         articleRepository.saveAll(articleEntities);
     }
 
-    public List<articleApiDto> getFolderList(String sortingMethod){
-        Member member = userService.getCurrentMember();
-        List<Folder> folderList;
-        List<FolderResponseDto> response = new ArrayList<>();
+    private ArticleDto convertToDto(articleApiDto article) {
+        return ArticleDto.builder()
+                .title(article.getTitle())
+                .url(article.getOriginallink())
+                .img(article.getLink())
+                .pubDate(LocalDate.parse(article.getPubDate()))
+                .build();
+    }
 
-        if(sortingMethod.equals("키워드추천")){
-            List<Article> ArticleList = ArticleRepository.findByMemberOrderByKeyword(member);
-        }
+    private Article convertToEntity(articleApiDto article) {
+        return Article.builder()
+                .title(article.getTitle())
+                .url(article.getOriginallink())
+                .img(article.getLink())
+                .pubDate(LocalDate.parse(article.getPubDate().substring(0, 10))) // 문자열에서 날짜 부분만 추출
+                .build();
+    }
 
-        for(Article i : ArticleList){
-            response.add(FolderResponseDto.builder()
-                    .ArticleId(i.getId())
-                    .folderName(i.getTitle())
-                    .lastModifiedAt(i.getModifiedAt())
-                    .build());
-        }
-        return response;
+    public String fetchArticleContent(Long articleId) throws IOException {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + articleId));
+        return crawlingService.fetchArticleContent(article.getUrl());
     }
 }

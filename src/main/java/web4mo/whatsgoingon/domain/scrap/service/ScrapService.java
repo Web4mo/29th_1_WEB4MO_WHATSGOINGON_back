@@ -12,11 +12,10 @@ public class ScrapService {
     FolderRepository folderRepository;
     ArticleRepository articleRepository;
     public void scraping(Long articleId, Long folderId) {
-        articleRepository.findById(articleId);
-        folderRepository.findById(folderId);
         Scrap scrap = Scrap.builder()
-                .article(articleRepository.findAById(articleId))
-                .folder(folderRepository.findAById(folderId)).build();
+                .article(articleRepository.findById(articleId).orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + articleId)))
+                .folder(folderRepository.findById(folderId).orElseThrow(() -> new IllegalArgumentException("Invalid folder ID: " + folderId)))
+                .build();
         scrapRepository.save(scrap);
     }
 }

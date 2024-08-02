@@ -20,6 +20,7 @@ public class ArticleDto {
     // private HowAbout; ?
 
     private String title;
+    private String url;
     private LocalDate pubDate;
     private boolean crawling;
     private String img;
