@@ -19,4 +19,8 @@ public class Message {
     // ProfileController
     public static String FETCH_PROFILE = "프로필 불러오기 성공했습니다.";
     public static String UPDATE_PROFILE = "프로필 수정 성공했습니다.";
+
+    // CalendarController
+    public static String FETCH_ATTENDANCE = "출석 기록 불러오기 성공했습니다.";
+    public static String ATTEND = "출석체크 성공했습니다.";
 }

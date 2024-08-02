@@ -1,11 +1,9 @@
-package web4mo.whatsgoingon.domain.mypage.profile.dto;
+package web4mo.whatsgoingon.domain.mypage.dto;
 
 import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Setter
 @Getter
 @Builder
 public class ProfileDto {

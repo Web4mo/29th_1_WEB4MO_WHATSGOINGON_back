@@ -1,9 +1,8 @@
-package web4mo.whatsgoingon.domain.mypage.profile.service;
+package web4mo.whatsgoingon.domain.mypage.service;
 
 import lombok.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import web4mo.whatsgoingon.domain.mypage.profile.dto.ProfileDto;
+import web4mo.whatsgoingon.domain.mypage.dto.ProfileDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.service.UserService;
 

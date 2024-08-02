@@ -1,4 +1,4 @@
-package web4mo.whatsgoingon.domain.mypage.profile.service;
+package web4mo.whatsgoingon.domain.mypage.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
