@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import web4mo.whatsgoingon.domain.BaseTime;
 
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,8 +44,8 @@ public class Member extends BaseTime {
     private Role role;
 
     @Column
-    private String profileImg;
+    private URL profileImg;
 
     @Column
-    private String type;
+    private String userType;
 }
