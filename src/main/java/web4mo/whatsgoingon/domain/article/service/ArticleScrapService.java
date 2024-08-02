@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Service;
-import web4mo.whatsgoingon.config.Crawling;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.entity.ArticleContent;
 import web4mo.whatsgoingon.domain.article.repository.ArticleContentRepository;

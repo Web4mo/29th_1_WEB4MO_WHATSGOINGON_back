@@ -66,7 +66,7 @@ public class ScrapService {
         ArticleContent articleContent = articleContentRepository.findByArticle(article);
         ScrapPageDto scrapPageDto = ScrapPageDto.builder()
                 .url(article.getUrl())
-                .category(article.getKeyword())
+                //.category(article.getKeyword())
                 .pubDate(article.getPubDate())
                 .content(articleContent.getContent())
                 .memo(scrap.getMemo())
