@@ -5,6 +5,8 @@ public class Message {
     public static String SIGN_UP = "회원가입에 성공했습니다.";
     public static String LOG_IN = "로그인에 성공했습니다.";
     public static String LOG_OUT = "로그아웃에 성공했습니다.";
+    public static String REISSUE = "토큰 재발급에 성공했습니다.";
+
 
     // FolderController
     public static String FOLDER_LIST = "폴더 목록 불러오기 성공했습니다";
@@ -20,4 +22,14 @@ public class Message {
     public static String DELETE_SCRAP = "스크랩 삭제 성공했습니다.";
     public static String SCRAP_MEMO = "스크랩 메모 수정 성공했습니다.";
     public static String SCRAP_AI = "AI 요약 성공했습니다.";
+
+    // ProfileController
+    public static String FETCH_PROFILE = "프로필 불러오기 성공했습니다.";
+    public static String UPDATE_PROFILE = "프로필 수정 성공했습니다.";
+    public static String UPLOAD_IMG = "프로필 사진 업로드 성공했습니다.";
+    public static String DELETE_IMG = "프로필 사진 삭제 성공했습니다.";
+
+    // CalendarController
+    public static String FETCH_ATTENDANCE = "출석 기록 불러오기 성공했습니다.";
+    public static String ATTEND = "출석체크 성공했습니다.";
 }
