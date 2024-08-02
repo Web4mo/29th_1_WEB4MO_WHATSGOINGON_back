@@ -29,8 +29,11 @@ import static org.thymeleaf.util.StringUtils.substring;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Slf4j
-public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
+public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     private static final String[] LIST = {
             "/home",
@@ -43,17 +46,6 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
             "/auth/login",
             "/reissue"
     };
-
-    private static final String[] AUTH_WHITE_LIST= {
-
-
-    };
-
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
-    @Autowired
-    private final RefreshTokenRepository refreshTokenRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
@@ -87,6 +79,4 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
 
         return http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),UsernamePasswordAuthenticationFilter.class).build();
     }
-
-
 }

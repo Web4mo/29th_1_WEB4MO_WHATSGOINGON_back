@@ -13,10 +13,7 @@ import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordReposit
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.lang.constant.ConstantDescs.NULL;
 
@@ -40,14 +37,14 @@ public class CategoryKeywordService {
             throw new IllegalStateException("회원이 아닙니다.");
         }
         Member user= optionalMember.get();
-        if(userCategorySelectionDto.getCategorykeywords().isEmpty()){
+        if(userCategorySelectionDto.getCategoryKeywords().isEmpty()){
             throw new IllegalStateException("선택한 카테고리 키워드가 없습니다.");
         }
 
         if(userCategoryKeywordRepository.existsByMember(user)){
             userCategoryKeywordRepository.deleteByMember(user);
         }
-        for(Map.Entry<String,List<String>> entry: userCategorySelectionDto.getCategorykeywords().entrySet() ){
+        for(Map.Entry<String,List<String>> entry: userCategorySelectionDto.getCategoryKeywords().entrySet() ){
             Category category=Category.valueOfCategory(entry.getKey());
             List<String> userKeyword=entry.getValue();
             for(String key: userKeyword){
@@ -82,6 +79,15 @@ public class CategoryKeywordService {
             categories.add(keyword.getCategory());
         }
         return categories;
+    }
+
+    //유저가 선택한 언론사만 가져오기
+    public List<Media> userMedium(Member member){
+        List<Media> medium=new ArrayList<>();
+        for(MediaUser media: mediaUserRepository.findByMember(member)) {
+            medium.add(media.getMedia());
+        }
+        return medium;
     }
 
     //언론사 저장하기
@@ -133,7 +139,42 @@ public class CategoryKeywordService {
             mediaLinks.add(mediaUser.getMedia().getLink());
         }
         return mediaLinks;
+    }
 
+    public void updateUserCategories(Member member, List<Category> categories) {
+        // 기존 카테고리 삭제
+        userCategoryKeywordRepository.deleteByMember(member);
+        // 새로운 카테고리 추가
+        for (Category category : categories) {
+            UserCategoryKeyword userCategoryKeyword = new UserCategoryKeyword();
+            userCategoryKeyword.setMember(member);
+            userCategoryKeyword.setCategory(category);
+            userCategoryKeywordRepository.save(userCategoryKeyword);
+        }
+    }
+
+    public void updateUserKeywords(Member member, List<String> keywords) {
+        // 기존 키워드 삭제
+        userCategoryKeywordRepository.deleteByMember(member);
+        // 새로운 키워드 추가
+        for (String keyword : keywords) {
+            UserCategoryKeyword userCategoryKeyword = new UserCategoryKeyword();
+            userCategoryKeyword.setMember(member);
+            userCategoryKeyword.setKeyword(keyword);
+            userCategoryKeywordRepository.save(userCategoryKeyword);
+        }
+    }
+
+    public void updateUserMedium(Member member, List<Media> media) {
+        // 기존 미디어 삭제
+        mediaUserRepository.deleteByMember(member);
+        // 새로운 미디어 추가
+        for (Media mediaItem : media) {
+            MediaUser mediaUser = new MediaUser();
+            mediaUser.setMember(member);
+            mediaUser.setMedia(mediaItem);
+            mediaUserRepository.save(mediaUser);
+        }
     }
 
 

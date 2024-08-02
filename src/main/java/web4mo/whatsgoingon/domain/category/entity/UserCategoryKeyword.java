@@ -1,14 +1,15 @@
 package web4mo.whatsgoingon.domain.category.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Service;
 import web4mo.whatsgoingon.domain.user.entity.Member;
+
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,6 +29,7 @@ public class UserCategoryKeyword {
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
     private Category category;
+
 
 
 }
