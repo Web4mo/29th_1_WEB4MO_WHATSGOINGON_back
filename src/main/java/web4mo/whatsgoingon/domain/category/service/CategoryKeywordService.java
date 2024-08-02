@@ -100,9 +100,9 @@ public class CategoryKeywordService {
     //유저가 선택한 카테고리 개수 가져오기
     public int userCategoryCount(Member member) {
         Set<Category> uniqueCategories = new HashSet<>();
-        for (UserCategoryKeyword keyword : userCategoryKeywordRepository.findByMember(member)) {
-            uniqueCategories.add(keyword.getCategory());
-        }
+//        for (UserCategoryKeyword keyword : userCategoryKeywordRepository.findByMember(member)) {
+//            uniqueCategories.add(keyword.getCategory());
+//        }
         return uniqueCategories.size();
     }
 

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import web4mo.whatsgoingon.domain.category.entity.Category;
-import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
+//import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 //import web4mo.whatsgoingon.domain.category.entity.Keyword;
 
 import java.time.LocalDate;
@@ -23,5 +23,5 @@ public class ArticleDto {
     private LocalDate pubDate;
     private boolean crawling;
     private String img;
-    private UserCategoryKeyword category;
+    //private UserCategoryKeyword category;
 }

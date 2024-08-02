@@ -11,12 +11,12 @@ import web4mo.whatsgoingon.config.NaverApi.articleApiDto;
 import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.service.ArticleService;
-import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
+//import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 import web4mo.whatsgoingon.domain.user.service.UserService;
 import web4mo.whatsgoingon.response.Response;
-import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
+//import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
@@ -35,7 +35,7 @@ import static web4mo.whatsgoingon.response.Response.success;
 @RequestMapping(value = "/article")
 public class ArticleController {
 
-    private final UserCategoryKeywordRepository userCategoryKeywordRepository;
+    //private final UserCategoryKeywordRepository userCategoryKeywordRepository;
     private final ArticleService articleService;
     private final UserService userService;
 

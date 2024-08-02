@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import web4mo.whatsgoingon.config.NaverApi.NaverApi;
-import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
+//import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 import web4mo.whatsgoingon.domain.category.repository.MediaUserRepository;
-import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
+//import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
 import web4mo.whatsgoingon.config.NaverApi.articleApiDto;
 import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
@@ -32,7 +32,7 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     private final UserService userService;
-    private final UserCategoryKeywordRepository userCategoryKeywordRepository;
+    //private final UserCategoryKeywordRepository userCategoryKeywordRepository;
 
     @Autowired
     private NaverApi naverApi; // 수정 - 의존성
@@ -64,7 +64,7 @@ public class ArticleService {
                 .img(article.getImg())
                 .pubDate(article.getPubDate())
                 .crawling(article.isCrawling())
-                .category(article.getKeyword())
+                //.category(article.getKeyword())
                 .build();
     }
 
