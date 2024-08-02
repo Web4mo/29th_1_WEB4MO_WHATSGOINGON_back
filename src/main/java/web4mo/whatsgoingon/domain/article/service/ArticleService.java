@@ -29,33 +29,32 @@ public class ArticleService {
     private CrawlingService crawlingService;
 
     public List<ArticleDto> getArticles(String query, int count, String sort) {
-        List<articleApiDto> articles = naverApi.naverApiResearch(query, count, sort);
-        return articles.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
+        List<articleApiDto> apiArticles = naverApi.naverApiResearch(query, count, sort);
 
-    public void saveArticles(String query, int count, String sort) {
-        List<articleApiDto> articles = naverApi.naverApiResearch(query, count, sort);
-        List<Article> articleEntities = articles.stream().map(this::convertToEntity).collect(Collectors.toList());
+        // API 데이터를 엔티티로 변환
+        List<Article> articleEntities = apiArticles.stream()
+                .map(this::convertToEntity)
+                .collect(Collectors.toList());
+
         articleRepository.saveAll(articleEntities);
+
+        // DTO로 변환
+        return articleEntities.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     private static final DateTimeFormatter API_DATE_FORMATTER = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z");
 
-    private ArticleDto convertToDto(articleApiDto article) {
-        LocalDate pubDate = null;
-        try {
-            ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
-            pubDate = zonedDateTime.toLocalDate();
-        } catch (DateTimeParseException e) {
-            // 예외 처리
-            e.getStackTrace();
-        }
-
+    private ArticleDto convertToDto(Article article) {
         return ArticleDto.builder()
+                .id(article.getId())
                 .title(article.getTitle())
-                .url(article.getOriginallink())
-                .img(article.getLink())  // 여기에 적절한 이미지 URL을 설정하도록 수정 필요
-                .pubDate(pubDate)
+                .url(article.getUrl())
+                .img(article.getImg())
+                .pubDate(article.getPubDate())
+                .crawling(article.isCrawling())
+                //.keyword(article.getKeyword())
                 .build();
     }
 
@@ -65,14 +64,13 @@ public class ArticleService {
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
             pubDate = zonedDateTime.toLocalDate();
         } catch (DateTimeParseException e) {
-            // 예외 처리
             e.getStackTrace();
         }
 
         return Article.builder()
                 .title(article.getTitle())
                 .url(article.getOriginallink())
-                .img(article.getLink())  // 여기에 적절한 이미지 URL을 설정하도록 수정 필요
+                .img(article.getLink())
                 .pubDate(pubDate)
                 .build();
     }
