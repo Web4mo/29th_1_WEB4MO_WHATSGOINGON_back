@@ -19,7 +19,7 @@ import static web4mo.whatsgoingon.response.Response.success;
 @RequestMapping(value="/scraping")
 public class ScrapController {
     private final ScrapService scrapService;
-    @GetMapping("/")
+    @GetMapping("/addScrap")
     @ResponseStatus(OK)
     @Transactional // 메인 페이지에서 스크랩 버튼 눌렀을때
     public Response scrapMain(@RequestParam(value = "articleId")Long articleId){
@@ -27,7 +27,7 @@ public class ScrapController {
         return success(SCRAP_MAIN, articleContent);
     }
 
-    @GetMapping("/")
+    @GetMapping("/scrapPage")
     @ResponseStatus(OK)
     @Transactional
     public Response scrapPage(@RequestParam(value = "scrapId")Long scrapId){
@@ -35,14 +35,14 @@ public class ScrapController {
         return success(SCRAP_PAGE, scrapPageDto);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/deleteScrap")
     @ResponseStatus(OK)
     public Response deleteScrap(@RequestParam(value = "scrapId")Long scrapId){
         scrapService.deleteScrap(scrapId);
         return success(DELETE_SCRAP);
     }
 
-    @PutMapping("/")
+    @PutMapping("/scrapMemo")
     @ResponseStatus(OK)
     @Transactional
     public Response scrapMemo(@RequestParam(value = "scrapId")Long scrapId,
@@ -50,7 +50,7 @@ public class ScrapController {
         scrapService.scrapMemo(scrapId, memo);
         return success(SCRAP_MEMO);
     }
-    @PostMapping("/")
+    @PostMapping("/scrapAi")
     @ResponseStatus(OK)
     @Transactional
     public Response scrapAI(@RequestParam(value = "scrapId")Long scrapId){

@@ -57,7 +57,7 @@ public class FolderController {
         return success(DELETE_FOLDER);
     }
 
-    @GetMapping("/scrapList")
+    @GetMapping("/scrapList/folderId")
     @ResponseStatus(OK)
     public Response scrapList(@RequestParam("folderId")Long folderId){
         List<ScrapResponseDto> response = folderService.scrapList(folderId);
