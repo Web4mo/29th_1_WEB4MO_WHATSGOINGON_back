@@ -12,10 +12,10 @@ import web4mo.whatsgoingon.domain.user.entity.Member;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserCategoryKeyword {
+public class KeywordUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_category_keyword_id")
+    @Column(name = "keyword_user_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,10 +24,6 @@ public class UserCategoryKeyword {
 
     @Column(name = "keyword")
     private String keyword;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private Category category;
 
 
 }

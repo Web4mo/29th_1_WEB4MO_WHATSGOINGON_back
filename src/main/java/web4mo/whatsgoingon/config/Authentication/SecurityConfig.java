@@ -20,8 +20,12 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import web4mo.whatsgoingon.domain.user.entity.RefreshToken;
 import web4mo.whatsgoingon.domain.user.repository.RefreshTokenRepository;
+
+import java.util.List;
 
 import static org.thymeleaf.util.StringUtils.substring;
 
@@ -58,6 +62,17 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception {
 
+        //cors 설정
+        http.cors(c-> {
+            CorsConfigurationSource source= request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(List.of("http://whatsgoingon-api"));
+                config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+                return config;
+            };
+            c.configurationSource(source);
+
+        });
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);

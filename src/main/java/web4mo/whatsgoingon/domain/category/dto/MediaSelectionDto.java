@@ -11,7 +11,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class MediaSelectionDto {
     private String userId;
-    private List<String> media;
     private Map<String, String> medias;
 
     @Builder

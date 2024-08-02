@@ -14,12 +14,14 @@ import java.util.Map;
 
 public class UserCategorySelectionDto {
     private String userId;
-    private Map<String,List<String>> categorykeywords;
+    private List<String> category;
+    private List<String> keyword;
 
     @Builder
-    public UserCategorySelectionDto(String userId,Map<String,List<String>> categorykeywords ) {
+    public UserCategorySelectionDto(String userId,List<String> category,List<String> keyword ) {
         this.userId = userId;
-        this.categorykeywords=categorykeywords;
+        this.category=category;
+        this.keyword=keyword;
     }
 }
 

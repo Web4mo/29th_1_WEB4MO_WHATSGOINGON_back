@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
+import web4mo.whatsgoingon.domain.category.entity.KeywordUser;
 
 import java.time.LocalDate;
 
@@ -43,7 +43,7 @@ public class Article {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
-    private UserCategoryKeyword keyword;
+    private KeywordUser keyword;
 
 
 }
