@@ -7,6 +7,10 @@ public class Message {
     public static String LOG_OUT = "로그아웃에 성공했습니다.";
     public static String REISSUE = "토큰 재발급에 성공했습니다.";
 
+    //UserCategoryController
+    public static String SAVE_CATEGORY = "카테고리 키워드 저장 성공했습니다.";
+    public static String SAVE_MEDIA ="언론사 저장 성공했습니다.";
+
 
     // FolderController
     public static String FOLDER_LIST = "폴더 목록 불러오기 성공했습니다";
@@ -32,4 +36,5 @@ public class Message {
     // CalendarController
     public static String FETCH_ATTENDANCE = "출석 기록 불러오기 성공했습니다.";
     public static String ATTEND = "출석체크 성공했습니다.";
+
 }
