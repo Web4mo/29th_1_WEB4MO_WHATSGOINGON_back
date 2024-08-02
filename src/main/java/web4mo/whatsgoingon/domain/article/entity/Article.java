@@ -6,13 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import web4mo.whatsgoingon.domain.BaseTime;
 import web4mo.whatsgoingon.domain.category.entity.Keyword;
 import web4mo.whatsgoingon.domain.scrap.entity.Scrap;
 import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
-
-
 import java.time.LocalDate;
 
 @Entity
@@ -45,6 +42,10 @@ public class Article extends BaseTime {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
     private UserCategoryKeyword keyword;
+
+    public void updateCrawling(){
+        this.crawling = true;
+    }
 
     public void updateCrawling(){
         this.crawling = true;
