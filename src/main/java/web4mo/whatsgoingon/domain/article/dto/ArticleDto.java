@@ -16,9 +16,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ArticleDto {
     // private Category category; ?
-    private Keyword keyword;
+    // private Keyword keyword = null;
     // private HowAbout; ?
 
+    private Long id;
     private String title;
     private String url;
     private LocalDate pubDate;

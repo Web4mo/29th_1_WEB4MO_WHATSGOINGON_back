@@ -41,9 +41,10 @@ public class Article {
     @Column
     private boolean crawling;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
     private Keyword keyword;
-
+     */
 
 }

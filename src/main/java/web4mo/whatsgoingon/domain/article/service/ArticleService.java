@@ -9,8 +9,10 @@ import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.repository.ArticleRepository;
 
+import java.time.*;
+
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.format.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,21 +39,41 @@ public class ArticleService {
         articleRepository.saveAll(articleEntities);
     }
 
+    private static final DateTimeFormatter API_DATE_FORMATTER = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z");
+
     private ArticleDto convertToDto(articleApiDto article) {
+        LocalDate pubDate = null;
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
+            pubDate = zonedDateTime.toLocalDate();
+        } catch (DateTimeParseException e) {
+            // 예외 처리
+            e.printStackTrace();
+        }
+
         return ArticleDto.builder()
                 .title(article.getTitle())
                 .url(article.getOriginallink())
-                .img(article.getLink())
-                .pubDate(LocalDate.parse(article.getPubDate()))
+                .img(article.getLink())  // 여기에 적절한 이미지 URL을 설정하도록 수정 필요
+                .pubDate(pubDate)
                 .build();
     }
 
     private Article convertToEntity(articleApiDto article) {
+        LocalDate pubDate = null;
+        try {
+            ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
+            pubDate = zonedDateTime.toLocalDate();
+        } catch (DateTimeParseException e) {
+            // 예외 처리
+            e.printStackTrace();
+        }
+
         return Article.builder()
                 .title(article.getTitle())
                 .url(article.getOriginallink())
-                .img(article.getLink())
-                .pubDate(LocalDate.parse(article.getPubDate().substring(0, 10))) // 문자열에서 날짜 부분만 추출
+                .img(article.getLink())  // 여기에 적절한 이미지 URL을 설정하도록 수정 필요
+                .pubDate(pubDate)
                 .build();
     }
 
