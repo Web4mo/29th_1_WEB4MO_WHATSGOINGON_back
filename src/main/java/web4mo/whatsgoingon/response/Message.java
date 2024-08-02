@@ -15,4 +15,9 @@ public class Message {
 
     // ScrapController
     public static String SCRAPING = "스크랩 성공했습니다.";
+    public static String SCRAP_MAIN = "메인페이지에서 스크랩 저장 성공했습니다.";
+    public static String SCRAP_PAGE = "스크랩 페이지 띄우기 성공했습니다.";
+    public static String DELETE_SCRAP = "스크랩 삭제 성공했습니다.";
+    public static String SCRAP_MEMO = "스크랩 메모 수정 성공했습니다.";
+    public static String SCRAP_AI = "AI 요약 성공했습니다.";
 }

@@ -26,12 +26,6 @@ import static web4mo.whatsgoingon.response.Response.success;
 public class FolderController {
     private final FolderService folderService;
 
-    @PostMapping("/test")
-    //@ResponseStatus(OK)
-    public Response test(){
-        return success(SIGN_UP);
-    }
-
     @PostMapping("/scrapList/addFolder")
     @ResponseStatus(OK)
     public Response addFolder(@RequestParam(value = "FolderName", required = false, defaultValue = "새 폴더") String string)
@@ -63,9 +57,9 @@ public class FolderController {
         return success(DELETE_FOLDER);
     }
 
-    @GetMapping("/scrapList/{folderId}")
+    @GetMapping("/scrapList")
     @ResponseStatus(OK)
-    public Response scrapList(@RequestPart("folderId")Long folderId){
+    public Response scrapList(@RequestParam("folderId")Long folderId){
         List<ScrapResponseDto> response = folderService.scrapList(folderId);
         return success(SCRAP_LIST, response);
     }
