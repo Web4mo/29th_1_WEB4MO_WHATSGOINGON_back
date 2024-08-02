@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import web4mo.whatsgoingon.domain.mypage.dto.ProfileDto;
 import web4mo.whatsgoingon.domain.mypage.service.ProfileService;
 import web4mo.whatsgoingon.response.Response;
@@ -35,19 +34,18 @@ public class ProfileController {
     //        return success(UPDATE_PROFILE, updatedProfile);
     //    }
 
-
-    @PostMapping("/")
-    @ResponseStatus(OK)
-    public Response uploadImage(@RequestParam("image") MultipartFile image) {
-        ProfileDto uploadImage = profileService.uploadImage(image);
-        return success(UPLOAD_IMG, uploadImage);
-    }
-
-    @DeleteMapping("/")
-    @ResponseStatus(OK)
-    public Response deleteImage() {
-        ProfileDto deleteImage = profileService.deleteImage();
-        return success(DELETE_IMG, deleteImage);
-    }
+//    @PostMapping("/")
+//    @ResponseStatus(OK)
+//    public Response uploadImage(@RequestParam("image") MultipartFile image) {
+//        ProfileDto uploadImage = profileService.uploadImage(image);
+//        return success(UPLOAD_IMG, uploadImage);
+//    }
+//
+//    @DeleteMapping("/")
+//    @ResponseStatus(OK)
+//    public Response deleteImage() {
+//        ProfileDto deleteImage = profileService.deleteImage();
+//        return success(DELETE_IMG, deleteImage);
+//    }
 
 }
