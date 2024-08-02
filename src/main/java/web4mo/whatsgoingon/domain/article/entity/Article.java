@@ -38,10 +38,11 @@ public class Article extends BaseTime {
     @Column
     private boolean crawling;
 
-
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "keyword_id",nullable = false)
     private UserCategoryKeyword keyword;
+    */
 
     public void updateCrawling(){
         this.crawling = true;

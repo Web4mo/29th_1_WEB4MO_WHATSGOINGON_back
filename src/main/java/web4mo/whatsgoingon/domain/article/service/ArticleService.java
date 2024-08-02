@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.time.format.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,18 +66,31 @@ public class ArticleService {
                 .img(article.getImg())
                 .pubDate(article.getPubDate())
                 .crawling(article.isCrawling())
-                .category(article.getKeyword())
+                //.category(article.getKeyword())
                 .build();
     }
 
     private Article convertToEntity(articleApiDto article) {
-        LocalDate pubDate = null;
+        LocalDate pubDate = LocalDate.parse("2024-08-02");
         try {
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
             pubDate = zonedDateTime.toLocalDate();
         } catch (DateTimeParseException e) {
             e.getStackTrace();
         }
+
+//        String link = article.getLink();
+//        Pattern pattern = Pattern.compile("https://n\\.news\\.naver\\.com/mnews/article/(\\d{3})/(\\d{10})\\?sid=104");
+//        Matcher matcher = pattern.matcher(link);
+//
+//        String pressCode = matcher.group(1);
+//        String articleId = matcher.group(2);
+//
+//        // articleId를 int로 변환 후 String으로 변환
+//        int DigitsInt = Integer.parseInt(articleId);
+//        String formattedDigits = Integer.toString(DigitsInt);
+//
+//        link = "https://mimgnews.pstatic.net/image/origin/"+pressCode+"/2024/08/02/"+formattedDigits+".jpg?type=nf220_150";
 
         return Article.builder()
                 .title(article.getTitle())

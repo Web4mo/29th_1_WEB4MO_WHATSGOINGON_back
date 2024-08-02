@@ -46,7 +46,6 @@ public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFil
 
     private static final String[] AUTH_WHITE_LIST= {
 
-
     };
 
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
