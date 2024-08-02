@@ -171,4 +171,7 @@ public class UserService {
         }
         return memberList;
     }
+
+//    public void updateProfile(Member member) {    }
+//    public void editPassword(Member member) {    }
 }

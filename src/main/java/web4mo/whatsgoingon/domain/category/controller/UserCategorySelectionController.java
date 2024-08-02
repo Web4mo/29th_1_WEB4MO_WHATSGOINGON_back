@@ -1,5 +1,6 @@
 package web4mo.whatsgoingon.domain.category.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import static web4mo.whatsgoingon.response.Message.SAVE_CATEGORY;
 import static web4mo.whatsgoingon.response.Message.SAVE_MEDIA;
 import static web4mo.whatsgoingon.response.Response.success;
 
+@Tag(name = "User Category Selection Controller")
 @Slf4j
 @RestController
 @RequiredArgsConstructor

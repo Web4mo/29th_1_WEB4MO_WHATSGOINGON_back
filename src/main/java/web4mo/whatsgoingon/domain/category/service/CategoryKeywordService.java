@@ -104,6 +104,13 @@ public class CategoryKeywordService {
 //            uniqueCategories.add(keyword.getCategory());
 //        }
         return uniqueCategories.size();
+    //유저가 선택한 언론사만 가져오기
+    public List<Media> userMedium(Member member){
+        List<Media> medium=new ArrayList<>();
+        for(MediaUser media: mediaUserRepository.findByMember(member)) {
+            medium.add(media.getMedia());
+        }
+        return medium;
     }
 
     //언론사 저장하기
@@ -143,7 +150,6 @@ public class CategoryKeywordService {
         //log.info(""+getMediaLink(user));
         return mediaRepository.findByName(user.getLoginId());
     }
-
 
 
 

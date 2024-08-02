@@ -34,6 +34,7 @@ public class Message {
     // ProfileController
     public static String FETCH_PROFILE = "프로필 불러오기 성공했습니다.";
     public static String UPDATE_PROFILE = "프로필 수정 성공했습니다.";
+    public static String EDIT_PASSWORD = "비밀번호 변경 성공했습니다.";
     public static String UPLOAD_IMG = "프로필 사진 업로드 성공했습니다.";
     public static String DELETE_IMG = "프로필 사진 삭제 성공했습니다.";
 
