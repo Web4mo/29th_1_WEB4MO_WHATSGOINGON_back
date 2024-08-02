@@ -1,6 +1,8 @@
 package web4mo.whatsgoingon.domain.mypage.dto;
 
 import lombok.*;
+
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,5 +17,5 @@ public class ProfileDto {
     private Set<String> interests;
     private Set<String> keywords;
     private Set<String> media;
-    private String profileImg;
+    private URL profileImg;
 }

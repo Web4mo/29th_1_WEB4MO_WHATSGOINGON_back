@@ -23,7 +23,7 @@ public class Attendance {
     @Column
     private LocalDate attendAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Member member;
 

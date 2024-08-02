@@ -27,10 +27,25 @@ public class ProfileController {
         return success(FETCH_PROFILE, profileDTO);
     }
 
-//    @PutMapping("/{loginId}")
+    //    @PutMapping("/{loginId}")
+    //    @ResponseStatus(OK)
+    //    public Response updateProfile(@RequestBody ProfileDto profileDto) {
+    //        ProfileDto updatedProfile = profileService.updateProfile(profileDto);
+    //        return success(UPDATE_PROFILE, updatedProfile);
+    //    }
+
+//    @PostMapping("/")
 //    @ResponseStatus(OK)
-//    public Response updateProfile(@RequestBody ProfileDto profileDto) {
-//        ProfileDto updatedProfile = profileService.updateProfile(profileDto);
-//        return success(UPDATE_PROFILE, updatedProfile);
+//    public Response uploadImage(@RequestParam("image") MultipartFile image) {
+//        ProfileDto uploadImage = profileService.uploadImage(image);
+//        return success(UPLOAD_IMG, uploadImage);
 //    }
+//
+//    @DeleteMapping("/")
+//    @ResponseStatus(OK)
+//    public Response deleteImage() {
+//        ProfileDto deleteImage = profileService.deleteImage();
+//        return success(DELETE_IMG, deleteImage);
+//    }
+
 }

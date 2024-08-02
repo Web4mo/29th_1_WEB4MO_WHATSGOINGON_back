@@ -26,7 +26,7 @@ public class CalendarService {
                 .map(attendance -> CalendarDto.builder()
                         .id(attendance.getId())
                         .loginId(attendance.getMember().getLoginId())
-                        .attendDate(attendance.getAttendDate())
+                        .attendDate(attendance.getAttendAt())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -36,13 +36,13 @@ public class CalendarService {
         LocalDate today = LocalDate.now();
 
         if (calendarRepository.findByMemberId(member.getId()).stream()
-                .anyMatch(attendance -> attendance.getAttendDate().equals(today))) {
+                .anyMatch(attendance -> attendance.getAttendAt().equals(today))) {
             throw new IllegalStateException("이미 오늘 출석했습니다.");
         }
 
         Attendance attendance = Attendance.builder()
                 .member(member)
-                .attendDate(LocalDate.from(today))
+                .attendAt(LocalDate.from(today))
                 .build();
 
         Attendance savedAttendance = calendarRepository.save(attendance);
@@ -50,7 +50,7 @@ public class CalendarService {
         return CalendarDto.builder()
                 .id(savedAttendance.getId())
                 .loginId(savedAttendance.getMember().getLoginId())
-                .attendDate(LocalDate.from(savedAttendance.getAttendDate()))
+                .attendDate(LocalDate.from(savedAttendance.getAttendAt()))
                 .build();
     }
 }
