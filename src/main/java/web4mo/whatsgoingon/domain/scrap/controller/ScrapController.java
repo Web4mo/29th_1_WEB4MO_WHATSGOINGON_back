@@ -41,6 +41,7 @@ public class ScrapController {
 
     @GetMapping("/scrapPage")
     @ResponseStatus(OK) // 스크랩 페이지
+
     public Response scrapPage(@RequestParam(value = "scrapId")Long scrapId){
         ScrapPageDto scrapPageDto = scrapService.scrapPage(scrapId);
         return success(SCRAP_PAGE, scrapPageDto);

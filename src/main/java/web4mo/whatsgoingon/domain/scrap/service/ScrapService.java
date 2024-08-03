@@ -38,6 +38,7 @@ public class ScrapService {
     private final ArticleRepository articleRepository;
     private final ArticleContentRepository articleContentRepository;
     private final UserService userService;
+
     public List<FolderResponseDto> clickScrap() {
         Member member = userService.getCurrentMember();
         List<Folder> folderList;
