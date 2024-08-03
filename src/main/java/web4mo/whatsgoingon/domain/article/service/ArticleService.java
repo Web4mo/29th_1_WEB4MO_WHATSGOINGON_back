@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import web4mo.whatsgoingon.config.NaverApi.ArticleApiDto;
 import web4mo.whatsgoingon.config.NaverApi.NaverApi;
 //import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 import web4mo.whatsgoingon.domain.category.repository.MediaUserRepository;
 //import web4mo.whatsgoingon.domain.category.repository.UserCategoryKeywordRepository;
-import web4mo.whatsgoingon.config.NaverApi.articleApiDto;
+import web4mo.whatsgoingon.config.NaverApi.ArticleApiDto;
 import web4mo.whatsgoingon.domain.article.dto.ArticleDto;
 import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.repository.ArticleRepository;
@@ -38,7 +39,7 @@ public class ArticleService {
     private NaverApi naverApi; // 수정 - 의존성
 
     public List<ArticleDto> getArticles(String query, int count, String sort) {
-        List<articleApiDto> apiArticles = naverApi.naverApiResearch(query, count, sort);
+        List<ArticleApiDto> apiArticles = naverApi.naverApiResearch(query, count, sort);
 
         // API 데이터를 엔티티로 변환
         List<Article> articleEntities = apiArticles.stream()
@@ -68,7 +69,7 @@ public class ArticleService {
                 .build();
     }
 
-    private Article convertToEntity(articleApiDto article) {
+    private Article convertToEntity(ArticleApiDto article) {
         LocalDate pubDate = null;
         try {
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(article.getPubDate(), API_DATE_FORMATTER);
