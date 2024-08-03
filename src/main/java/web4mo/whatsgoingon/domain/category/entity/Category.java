@@ -29,6 +29,7 @@ public enum Category {
         this.topics=new ArrayList<>(topics);
     }
 
+    //한글 카테고리 -> Category로 변경
     public static Category valueofCategory(String name){
         for(Category label: values()){
             if(label.getName().equals(name)){
@@ -37,6 +38,7 @@ public enum Category {
         }
         throw new IllegalStateException("없는 category: " + name);
     }
+    //키워드로 카테고리 찾기
     public static Category getCategory(String value){
         for(Category label: values()){
             for(String key: label.getTopics()){
@@ -46,6 +48,17 @@ public enum Category {
             }
         }
         throw new IllegalStateException("속하는 category 없음: " + value);
+    }
+    //키워드 존재하는지 확인
+    public static Boolean isKeyword(String value){
+        for(Category label: values()){
+            for(String key: label.getTopics()){
+                if(key.equals(value)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

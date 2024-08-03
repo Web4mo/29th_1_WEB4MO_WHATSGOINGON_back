@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -27,4 +26,8 @@ public class CategoryUser {
     @Column(name = "category")
     private Category category;
 
+
+    public void updateCategory(Category category){
+        this.category=category;
+    }
 }

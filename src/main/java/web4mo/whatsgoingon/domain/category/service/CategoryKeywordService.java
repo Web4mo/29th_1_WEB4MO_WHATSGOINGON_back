@@ -16,8 +16,6 @@ import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 
 import java.util.*;
 
-import static java.lang.constant.ConstantDescs.NULL;
-
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -58,19 +56,14 @@ public class CategoryKeywordService {
 
         }
 
-        log.info("키워드만"+categoryUserRepository.findByMember(user));
         List<String> categories= new ArrayList<>();
         for(CategoryUser categoryUser:categoryUserRepository.findByMember(user)){
             categories.add(categoryUser.getCategory().getName());
         }
-        log.info("카테고리만"+ keywordUserRepository.findByMember(user));
-        List<String> keywords= new ArrayList<>();
-        for(KeywordUser keywordUser: keywordUserRepository.findByMember(user)){
-            keywords.add(keywordUser.getKeyword());
-        }
+
         List<List<String>> categoryKeywords = new ArrayList<>();
         categoryKeywords.add(categories);
-        categoryKeywords.add(keywords);
+        categoryKeywords.add(userKeywords(user));
         return categoryKeywords;
     }
 
@@ -100,15 +93,17 @@ public class CategoryKeywordService {
     //유저가 선택한 카테고리 개수 가져오기
     public int userCategoryCount(Member member) {
         Set<Category> uniqueCategories = new HashSet<>();
-//        for (UserCategoryKeyword keyword : userCategoryKeywordRepository.findByMember(member)) {
-//            uniqueCategories.add(keyword.getCategory());
-//        }
+        for (CategoryUser categoryUser : categoryUserRepository.findByMember(member)) {
+            uniqueCategories.add(categoryUser.getCategory());
+        }
         return uniqueCategories.size();
+    }
+
     //유저가 선택한 언론사만 가져오기
-    public List<Media> userMedium(Member member){
-        List<Media> medium=new ArrayList<>();
+    public List<String> userMedium(Member member){
+        List<String> medium=new ArrayList<>();
         for(MediaUser media: mediaUserRepository.findByMember(member)) {
-            medium.add(media.getMedia());
+            medium.add(media.getMedia().getName());
         }
         return medium;
     }
@@ -131,15 +126,15 @@ public class CategoryKeywordService {
             mediaUserRepository.deleteByMember(user);
         }
         if(mediaSelectionDto.getMedias()==null){
-            MediaUser noMedia=MediaUser.builder().media(null).member(user).build();
-            mediaUserRepository.save(noMedia);
             return null;
         }
+        List<Media> mediaList=new ArrayList<>();
         for(Map.Entry<String,String> entry: mediaSelectionDto.getMedias().entrySet() ){
             Media media;
             if(!mediaRepository.existsByName(entry.getKey())){
                 media=Media.builder().name(entry.getKey()).link(entry.getValue()).build();
                 mediaRepository.save(media);
+                mediaList.add(mediaRepository.findByName(entry.getKey()));
             }
             else{
                 continue;
@@ -147,10 +142,55 @@ public class CategoryKeywordService {
             MediaUser mediaUser=MediaUser.builder().media(media).member(user).build();
             mediaUserRepository.save(mediaUser);
         }
-        //log.info(""+getMediaLink(user));
-        return mediaRepository.findByName(user.getLoginId());
+        return mediaList;
     }
 
+    //
+    //회원 정보 수정
+    //
+    //카테고리 변경
+    public void updateUserCategories(Member member, List<String> interests) {
+        log.info("변경전 "+userCategories(member).toString());
+        categoryUserRepository.deleteByMember(member);
+        for(String usercategory: interests){
+            Category category=Category.valueofCategory(usercategory);
+            CategoryUser categoryUser=CategoryUser.builder().category(category).member(member).build();
+            categoryUserRepository.save(categoryUser);
+        }
+        log.info("수정 후 "+userCategories(member).toString());
+    }
 
+    //키워드 변경
+    public void updateUserKeywords(Member member, List<String> keywords) {
+        log.info("변경전 "+userKeywords(member).toString());
+        keywordUserRepository.deleteByMember(member);
+        for(String keyword: keywords){
+            KeywordUser keywordUser = web4mo.whatsgoingon.domain.category.entity.KeywordUser.builder().keyword(keyword).member(member).build();
+            keywordUserRepository.save(keywordUser);
+        }
+        log.info("수정 후 "+userKeywords(member).toString());
 
+    }
+
+    //언론사 변경
+    public void updateUserMedium(Member member, Map<String, String> media) {
+        log.info("변경전 "+userMedium(member).toString());
+        mediaUserRepository.deleteByMember(member);
+        if(!media.isEmpty()){
+            List<Media> mediaList=new ArrayList<>();
+            for(Map.Entry<String,String> entry: media.entrySet() ) {
+                Media me;
+                if (!mediaRepository.existsByName(entry.getKey())) {
+                    me = Media.builder().name(entry.getKey()).link(entry.getValue()).build();
+                    mediaRepository.save(me);
+                    mediaList.add(mediaRepository.findByName(entry.getKey()));
+                } else {
+                    continue;
+                }
+                MediaUser mediaUser = MediaUser.builder().media(me).member(member).build();
+                mediaUserRepository.save(mediaUser);
+            }
+        }
+        log.info("수정 후 "+userMedium(member).toString());
+    }
 }

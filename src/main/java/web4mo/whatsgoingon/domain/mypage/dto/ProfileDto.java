@@ -21,6 +21,6 @@ public class ProfileDto {
     private String createAt; //assignDate
     private List<Category> interests;
     private List<String> keywords;
-    private List<Media> media;
+    private List<String> media;
     private URL profileImg;
 }

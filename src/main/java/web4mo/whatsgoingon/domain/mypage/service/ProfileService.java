@@ -3,11 +3,14 @@ package web4mo.whatsgoingon.domain.mypage.service;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import web4mo.whatsgoingon.config.Authentication.PasswordEncoderConfig;
 import org.springframework.stereotype.Service;
 import web4mo.whatsgoingon.domain.category.entity.Category;
 import web4mo.whatsgoingon.domain.category.service.CategoryKeywordService;
+import web4mo.whatsgoingon.domain.mypage.dto.EditPasswordDto;
 import web4mo.whatsgoingon.domain.mypage.dto.ProfileDto;
+import web4mo.whatsgoingon.domain.mypage.dto.UpdateProfileDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
 import web4mo.whatsgoingon.domain.user.service.UserService;
 
@@ -24,6 +27,7 @@ public class ProfileService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public ProfileDto getProfile() {
         Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
         return ProfileDto.builder()
@@ -39,19 +43,20 @@ public class ProfileService {
                 .build();
     }
 
-    public ProfileDto updateProfile(ProfileDto profileDto){
+    @Transactional
+    public ProfileDto updateProfile(UpdateProfileDto updateProfileDto){
         Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
         if (member.getUserType() != null) {
-            member.setUserType(profileDto.getUserType());
+            member.setUserType(updateProfileDto.getUserType());
         }
-        if (profileDto.getInterests() != null) {
-            categoryKeywordService.updateUserCategories(member, profileDto.getInterests());
+        if (updateProfileDto.getUserCategories() != null) {
+            categoryKeywordService.updateUserCategories(member, updateProfileDto.getUserCategories());
         }
-        if (profileDto.getKeywords() != null) {
-            categoryKeywordService.updateUserKeywords(member, profileDto.getKeywords());
+        if (updateProfileDto.getUserKeywords() != null) {
+            categoryKeywordService.updateUserKeywords(member, updateProfileDto.getUserKeywords());
         }
-        if (profileDto.getMedia() != null) {
-            categoryKeywordService.updateUserMedium(member, profileDto.getMedia());
+        if (updateProfileDto.getUserMedium() != null) {
+            categoryKeywordService.updateUserMedium(member, updateProfileDto.getUserMedium());
         }
 
         //userService.updateProfile(member);
@@ -69,7 +74,7 @@ public class ProfileService {
                 .build();
     }
 
-    public ProfileDto editPassword(ProfileDto profileDto){
+    public ProfileDto editPassword(EditPasswordDto profileDto){
         Member member = userService.getCurrentMember(); // 현재 로그인되어있는 정보
 
         // 현재 비밀번호 확인
@@ -83,7 +88,7 @@ public class ProfileService {
         }
 
         // 비밀번호 업데이트
-        member.setPassword(passwordEncoder.encode(profileDto.getNewPassword())); // 비밀번호 인코딩
+        member.setPassword(profileDto.getNewPassword()); // 비밀번호 인코딩
         //userService.updateProfile(member); // 회원 정보 업데이트
 
         return ProfileDto.builder()

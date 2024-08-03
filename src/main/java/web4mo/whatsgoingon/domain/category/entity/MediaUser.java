@@ -24,4 +24,7 @@ public class MediaUser {
     @JoinColumn(name = "media_id")
     private Media media;
 
+    public void updateMedia(Media media){
+        this.media=media;
+    }
 }

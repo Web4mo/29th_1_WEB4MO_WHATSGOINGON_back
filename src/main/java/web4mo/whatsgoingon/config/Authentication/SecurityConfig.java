@@ -48,7 +48,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/auth/signup/**",
             "/auth/login",
-            "/reissue"
+            "/reissue",
+            "/api/profile/**"
     };
 
     @Bean

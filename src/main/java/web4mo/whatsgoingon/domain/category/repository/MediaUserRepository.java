@@ -13,4 +13,9 @@ public interface MediaUserRepository extends JpaRepository<MediaUser, Long> {
     Boolean existsByMember(Member member);
     void deleteByMember(Member member);
     List<MediaUser> findByMember(Member member);
+
+
 }
+
+
+

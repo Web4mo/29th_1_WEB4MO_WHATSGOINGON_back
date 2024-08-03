@@ -26,4 +26,7 @@ public class KeywordUser {
     private String keyword;
 
 
+    public void updateKeyword(String keyword){
+        this.keyword=keyword;
+    }
 }

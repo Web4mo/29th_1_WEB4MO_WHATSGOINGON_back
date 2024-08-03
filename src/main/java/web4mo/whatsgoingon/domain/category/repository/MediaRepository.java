@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface MediaRepository extends JpaRepository<Media,Long> {
-    List<Media> findByName(String name);
+    Media findByName(String name);
     Boolean existsByName(String name);
     void deleteByName(String name);
 

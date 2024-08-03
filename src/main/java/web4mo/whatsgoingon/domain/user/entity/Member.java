@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import web4mo.whatsgoingon.domain.BaseDate;
-import web4mo.whatsgoingon.domain.category.entity.MediaUser;
-import web4mo.whatsgoingon.domain.category.entity.UserCategoryKeyword;
 
 
 import java.net.URL;
