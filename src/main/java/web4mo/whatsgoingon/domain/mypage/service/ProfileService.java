@@ -5,21 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import web4mo.whatsgoingon.config.Authentication.PasswordEncoderConfig;
 import org.springframework.stereotype.Service;
-import web4mo.whatsgoingon.domain.category.entity.Category;
 import web4mo.whatsgoingon.domain.category.service.CategoryKeywordService;
 import web4mo.whatsgoingon.domain.mypage.dto.EditPasswordDto;
 import web4mo.whatsgoingon.domain.mypage.dto.ProfileDto;
 import web4mo.whatsgoingon.domain.mypage.dto.UpdateProfileDto;
 import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.repository.UserRepository;
 import web4mo.whatsgoingon.domain.user.service.UserService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +26,8 @@ public class ProfileService {
 
     @Autowired
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public ProfileDto getProfile() {
@@ -91,7 +89,7 @@ public class ProfileService {
 
         // 비밀번호 업데이트
         member.updatePassword(profileDto.getNewPassword()); // 비밀번호 인코딩
-        //userService.updateProfile(member); // 회원 정보 업데이트
+        userRepository.save(member);// 회원 정보 업데이트
 
         return ProfileDto.builder()
                 .id(member.getId())
@@ -111,17 +109,11 @@ public class ProfileService {
         if(image.isEmpty()) {
             throw new IllegalArgumentException("이미지가 없습니다.");
         }
-        String old= String.valueOf(getProfile().getProfileImg());
-        URL newURL=new URL(s3Uploader.updateFile(image,old,dir));
         Member member = userService.getCurrentMember();
+        String oldfilename = String.valueOf(member.getProfileImg());
+        URL newURL=new URL(s3Uploader.updateFile(image, oldfilename,dir));
         member.updateProfilImg(newURL);
-//        String storedFileName = s3Uploader.upload(image,"images");
-//        URL imageUrl = new URL(storedFileName);
-//
-//        Member member = userService.getCurrentMember();
-//        ProfileImg profileImg = new ProfileImg(imageUrl);
-//        member.setProfileImg(profileImg);
-//        userService.updateMember(member);
+        userRepository.save(member);
 
         return ProfileDto.builder()
                 .id(member.getId())
@@ -139,11 +131,11 @@ public class ProfileService {
 
     // 이미지 삭제 로직
     public ProfileDto deleteImage() throws IOException {
-        String old= String.valueOf(getProfile().getProfileImg());
-        s3Uploader.updateFile(null,old,null);
-        ProfileDto.builder().profileImg(null).build();
         Member member = userService.getCurrentMember();
+        String oldfilename = String.valueOf(member.getProfileImg());
+        s3Uploader.deleteFile(oldfilename);
         member.updateProfilImg(null);
+        userRepository.save(member);
         return null;
     }
 

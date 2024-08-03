@@ -55,7 +55,7 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping(consumes = { "multipart/form-data" })
     @ResponseStatus(OK)
     public Response uploadImage(@RequestParam("image") MultipartFile image,
                                 @RequestParam("dir") String dir) {
