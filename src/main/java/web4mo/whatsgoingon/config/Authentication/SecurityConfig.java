@@ -67,12 +67,12 @@ public class SecurityConfig {
             c.configurationSource(source);
 
         });
-//        http.httpBasic(AbstractHttpConfigurer::disable);
-//        http.csrf(AbstractHttpConfigurer::disable);
-//        http.formLogin(AbstractHttpConfigurer::disable);
+        http.httpBasic(AbstractHttpConfigurer::disable);
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.formLogin(AbstractHttpConfigurer::disable);
 //        http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
 //                .anyRequest().authenticated());
-//        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.logout((logoutConfig)-> logoutConfig
             .logoutUrl("/logout")
