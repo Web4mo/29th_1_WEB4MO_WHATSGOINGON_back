@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class articleApiDto {
+public class ArticleApiDto {
     private String title;
     private String originallink;
     private String link;
