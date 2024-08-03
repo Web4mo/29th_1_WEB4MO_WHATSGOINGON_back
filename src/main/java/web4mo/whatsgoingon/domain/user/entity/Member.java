@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -40,4 +39,14 @@ public class Member extends BaseDate {
     @Column
     private String userType;
 
+    public void updateProfilImg(URL newUrl){
+        this. profileImg=newUrl;
+    }
+
+    public void updatePassword(String password){
+        this.password=password;
+    }
+    public void updateUserType(String userType){
+        this.userType=userType;
+    }
 }
