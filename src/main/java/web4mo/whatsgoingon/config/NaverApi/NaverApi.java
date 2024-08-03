@@ -16,7 +16,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class NaverApi {
 
-    public List<articleApiDto> naverApiResearch(String query, int display, String sort){
+    /*
+    public static void main(String[] args) {
+        naverApiResearch("기사", 1, "sort");
+    }
+    */
+
+
+    public List<ArticleApiDto> naverApiResearch(String query, int display, String sort){
+        System.out.println("api 호줄");
         String clientId = "bEN9b9S5f29hb9uLIAwk";
         String clientSecret = "7qhxwNjo7b";
 
@@ -35,12 +43,12 @@ public class NaverApi {
         return parseJsonToArticles(get(apiURL,requestHeaders));
     }
 
-    private static List<articleApiDto> parseJsonToArticles(String jsonResponse) {
+    private static List<ArticleApiDto> parseJsonToArticles(String jsonResponse) {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(jsonResponse, JsonObject.class);
         JsonArray itemsArray = jsonObject.getAsJsonArray("items");
 
-        Type listType = new TypeToken<List<articleApiDto>>(){}.getType();
+        Type listType = new TypeToken<List<ArticleApiDto>>(){}.getType();
         return gson.fromJson(itemsArray, listType);
     }
 
