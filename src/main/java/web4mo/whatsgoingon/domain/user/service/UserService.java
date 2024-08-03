@@ -43,7 +43,6 @@ public class UserService {
      */
     @Transactional
     public Member signup(SignUpRequestDto signUpRequestDto){
-        System.out.println(signUpRequestDto.getUserType());
         validateDuplicateUser(signUpRequestDto.getLoginId());
         isPasswordMatching(signUpRequestDto.getPassword(), signUpRequestDto.getConfirmPassword());
 
@@ -79,8 +78,7 @@ public class UserService {
      */
     @Transactional
     public TokenDto login(LogInRequestDto logInRequestDto){
-        //System.out.println(logInRequestDto.getUserId());
-        Optional<Member> optionalUser = userRepository.findByLoginId(logInRequestDto.getUserId());
+        Optional<Member> optionalUser = userRepository.findByLoginId(logInRequestDto.getLoginId());
         log.info("로그인 진행중 ....");
         if(optionalUser.isEmpty()){
             throw new IllegalStateException("회원이 아닙니다.");
@@ -92,7 +90,7 @@ public class UserService {
 
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(logInRequestDto.getUserId(),logInRequestDto.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(logInRequestDto.getLoginId(),logInRequestDto.getPassword());
          // 2. 실제 검증. authenticate() 메서드를 통해 요청된 Member 에 대한 검증 진행
         // authenticate 메서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드 실행
         Authentication authentication=authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -105,7 +103,7 @@ public class UserService {
         //인증 정보 기반으로 jwt 토큰 생성
         TokenDto tokenDto=jwtTokenProvider.generateTokenDto(authentication);
         RefreshToken refreshToken= RefreshToken.builder()
-                .userId(logInRequestDto.getUserId())
+                .userId(logInRequestDto.getLoginId())
                 .refreshToken(tokenDto.getRefreshToken())
                 .grantAuthority(authentication.getAuthorities().toString()).build();
         if (! refreshTokenRepository.existsByUserId(userId)){
