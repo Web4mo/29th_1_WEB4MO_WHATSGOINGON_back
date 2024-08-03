@@ -11,10 +11,14 @@ import web4mo.whatsgoingon.domain.article.entity.Article;
 import web4mo.whatsgoingon.domain.article.entity.ArticleContent;
 import web4mo.whatsgoingon.domain.article.repository.ArticleContentRepository;
 import web4mo.whatsgoingon.domain.article.repository.ArticleRepository;
+import web4mo.whatsgoingon.domain.scrap.dto.FolderResponseDto;
 import web4mo.whatsgoingon.domain.scrap.dto.ScrapPageDto;
+import web4mo.whatsgoingon.domain.scrap.entity.Folder;
 import web4mo.whatsgoingon.domain.scrap.entity.Scrap;
 import web4mo.whatsgoingon.domain.scrap.repository.FolderRepository;
 import web4mo.whatsgoingon.domain.scrap.repository.ScrapRepository;
+import web4mo.whatsgoingon.domain.user.entity.Member;
+import web4mo.whatsgoingon.domain.user.service.UserService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +26,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,21 +37,28 @@ public class ScrapService {
     private final FolderRepository folderRepository;
     private final ArticleRepository articleRepository;
     private final ArticleContentRepository articleContentRepository;
-    //private final ClovaSummary clovaSummary;
-    public String makeContent(String url) throws IOException {
-        Connection articleConn = Jsoup.connect(url).userAgent("Mozilla/5.0"); // 네이버 뉴스 기사 페이지 요청
-        Document articleDoc = articleConn.get();
+    private final UserService userService;
 
-        Element content = articleDoc.selectFirst("#dic_area");  // 기사 본문 추출
-        if (content != null) {
-            return content.text();
-        } else {
-            return "기사 본문을 찾을 수 없습니다.";
+    public List<FolderResponseDto> clickScrap() {
+        Member member = userService.getCurrentMember();
+        List<Folder> folderList;
+        List<FolderResponseDto> response = new ArrayList<>();
+
+        folderList = folderRepository.findByMemberOrderByName(member);
+        for(Folder i : folderList){
+            response.add(FolderResponseDto.builder()
+                    .folderId(i.getId())
+                    .folderName(i.getName())
+                    .lastModifiedAt(i.getModifiedAt())
+                    .build());
         }
+        return response;
     }
 
-    public String scrapMain(Long articleId) {
+
+    public Long scrapMain(Long articleId, Long folderId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
+        Folder folder = folderRepository.findAById(folderId);
         if(!article.isCrawling()){
             try {
                 article.updateCrawling();
@@ -53,12 +66,16 @@ public class ScrapService {
                 articleContentRepository.save(ArticleContent.builder()
                         .article(article)
                         .content(content).build());
-                return content;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        return articleContentRepository.findByArticle(article).getContent();
+        Scrap scrap = Scrap.builder()
+                .folder(folder)
+                .article(article).build();
+        scrapRepository.save(scrap);
+        return scrap.getId();
+
     }
     public ScrapPageDto scrapPage(Long scrapId) {
         Scrap scrap = scrapRepository.findById(scrapId).orElseThrow();
@@ -91,6 +108,17 @@ public class ScrapService {
 
     }
 
+    public String makeContent(String url) throws IOException {
+        Connection articleConn = Jsoup.connect(url).userAgent("Mozilla/5.0"); // 네이버 뉴스 기사 페이지 요청
+        Document articleDoc = articleConn.get();
+
+        Element content = articleDoc.selectFirst("#dic_area");  // 기사 본문 추출
+        if (content != null) {
+            return content.text();
+        } else {
+            return "기사 본문을 찾을 수 없습니다.";
+        }
+    }
     public String makeSummary(String content){
 
         String language = "ko";
@@ -155,4 +183,6 @@ public class ScrapService {
         }
         return "summaryResult";
     }
+
+
 }

@@ -5,9 +5,13 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import web4mo.whatsgoingon.domain.scrap.dto.FolderResponseDto;
 import web4mo.whatsgoingon.domain.scrap.dto.ScrapPageDto;
+import web4mo.whatsgoingon.domain.scrap.entity.Folder;
 import web4mo.whatsgoingon.domain.scrap.service.ScrapService;
 import web4mo.whatsgoingon.response.Response;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 import static web4mo.whatsgoingon.response.Message.*;
@@ -19,17 +23,25 @@ import static web4mo.whatsgoingon.response.Response.success;
 @RequestMapping(value="/scraping")
 public class ScrapController {
     private final ScrapService scrapService;
-    @GetMapping("/addScrap")
+
+    @GetMapping("/clickScrap")
+    @ResponseStatus(OK) // 메인페이지에서 연필 눌렀을때
+    public Response clickScrap(){
+        List <FolderResponseDto> folderList = scrapService.clickScrap();
+        return success(CLICK_LIST, folderList);
+    }
+    @PostMapping("/addScrap")
     @ResponseStatus(OK)
-    @Transactional // 메인 페이지에서 스크랩 버튼 눌렀을때
-    public Response scrapMain(@RequestParam(value = "articleId")Long articleId){
-        String articleContent = scrapService.scrapMain(articleId);
-        return success(SCRAP_MAIN, articleContent);
+    @Transactional // 연필 눌러서 폴더 띄우고 폴더 선택해서 저장할때
+    public Response scrapMain(@RequestParam(value = "articleId")Long articleId,
+                              @RequestParam(value = "folderId")Long folderId){
+        Long scrapId = scrapService.scrapMain(articleId, folderId);
+        return success(SCRAP_MAIN, scrapId);
     }
 
     @GetMapping("/scrapPage")
-    @ResponseStatus(OK)
-    @Transactional
+    @ResponseStatus(OK) // 스크랩 페이지
+
     public Response scrapPage(@RequestParam(value = "scrapId")Long scrapId){
         ScrapPageDto scrapPageDto = scrapService.scrapPage(scrapId);
         return success(SCRAP_PAGE, scrapPageDto);

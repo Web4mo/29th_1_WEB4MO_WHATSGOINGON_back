@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @Getter
 public enum Category {
     //정치/경제/사회/ 생활 문화/ IT과학/ 세계/스포츠/연예
-    POLITICS("정치", List.of("국회", "북한", "국방")),
+    POLITICS("정치", List.of("국회", "북한", "국방","행정")),
     ECONOMY("경제",List.of("금융","산업","부동산","글로벌 경제","생활 경제")),
     SOCIETY("사회",List.of("사건","교육","언론","환경","인권","식품")),
     LIFESTYLE_CULTURE("생활문화",List.of("건강정보","도로","여행","음식","패션","공연")),

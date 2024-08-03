@@ -24,12 +24,14 @@ public class Message {
     public static String SCRAP_LIST = "스크랩 목록 불러오기 성공했습니다.";
 
     // ScrapController
+    public static String CLICK_LIST = "폴더 목록 불러오기 성공했습니다.";
     public static String SCRAPING = "스크랩 성공했습니다.";
     public static String SCRAP_MAIN = "메인페이지에서 스크랩 저장 성공했습니다.";
     public static String SCRAP_PAGE = "스크랩 페이지 띄우기 성공했습니다.";
     public static String DELETE_SCRAP = "스크랩 삭제 성공했습니다.";
     public static String SCRAP_MEMO = "스크랩 메모 수정 성공했습니다.";
     public static String SCRAP_AI = "AI 요약 성공했습니다.";
+    public static String CLICK_SCRAP = "연필모양 눌렀을때 폴더 리스트 반환 성공했습니다.";
 
     // ProfileController
     public static String FETCH_PROFILE = "프로필 불러오기 성공했습니다.";
