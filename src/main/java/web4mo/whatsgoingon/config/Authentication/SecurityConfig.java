@@ -40,6 +40,7 @@ public class SecurityConfig {
     private final RefreshTokenRepository refreshTokenRepository;
 
     private static final String[] LIST = {
+            "/",
             "/home",
             "/swagger-ui/index.html",
             "/swagger-ui.html",
@@ -66,12 +67,12 @@ public class SecurityConfig {
             c.configurationSource(source);
 
         });
-        http.httpBasic(AbstractHttpConfigurer::disable);
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.formLogin(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
-                .anyRequest().authenticated());
-        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http.httpBasic(AbstractHttpConfigurer::disable);
+//        http.csrf(AbstractHttpConfigurer::disable);
+//        http.formLogin(AbstractHttpConfigurer::disable);
+//        http.authorizeHttpRequests((auth) ->auth.requestMatchers(LIST).permitAll()
+//                .anyRequest().authenticated());
+//        http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.logout((logoutConfig)-> logoutConfig
             .logoutUrl("/logout")
@@ -89,9 +90,9 @@ public class SecurityConfig {
                     })
                     .deleteCookies("remember-me"));
 
-        http.exceptionHandling((exception)-> exception
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint));
+//        http.exceptionHandling((exception)-> exception
+//                .accessDeniedHandler(jwtAccessDeniedHandler)
+//                .authenticationEntryPoint(jwtAuthenticationEntryPoint));
 
         return http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),UsernamePasswordAuthenticationFilter.class).build();
     }
