@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import web4mo.whatsgoingon.domain.category.entity.Category;
 import web4mo.whatsgoingon.domain.category.entity.Media;
 import web4mo.whatsgoingon.domain.mypage.dto.EditPasswordDto;
@@ -13,6 +14,7 @@ import web4mo.whatsgoingon.domain.mypage.dto.UpdateProfileDto;
 import web4mo.whatsgoingon.domain.mypage.service.ProfileService;
 import web4mo.whatsgoingon.response.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,18 +55,26 @@ public class ProfileController {
     }
 
 
-//    @PostMapping("/")
-//    @ResponseStatus(OK)
-//    public Response uploadImage(@RequestParam("image") MultipartFile image) {
-//        ProfileDto uploadImage = profileService.uploadImage(image);
-//        return success(UPLOAD_IMG, uploadImage);
-//    }
-//
-//    @DeleteMapping("/")
-//    @ResponseStatus(OK)
-//    public Response deleteImage() {
-//        ProfileDto deleteImage = profileService.deleteImage();
-//        return success(DELETE_IMG, deleteImage);
-//    }
+    @PostMapping(consumes = { "multipart/form-data" })
+    @ResponseStatus(OK)
+    public Response uploadImage(@RequestParam("image") MultipartFile image,
+                                @RequestParam("dir") String dir) {
+        try {
+            // 프로필 이미지 업로드 및 업데이트 처리
+            ProfileDto uploadImage = profileService.uploadImage(image, dir);
+            // 성공적으로 처리되었음을 응답
+            return success("프로필 이미지 업로드 성공", uploadImage);
+        } catch (IOException e) {
+            // 예외 발생 시 클라이언트에게 오류 메시지 반환
+            return success("프로필 이미지 업로드 중 오류가 발생했습니다.", e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/")
+    @ResponseStatus(OK)
+    public Response deleteImage() throws IOException {
+        ProfileDto deleteImage = profileService.deleteImage();
+        return success(DELETE_IMG, deleteImage);
+    }
 
 }
