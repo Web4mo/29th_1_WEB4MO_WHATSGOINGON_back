@@ -24,6 +24,7 @@ public class Message {
     public static String SCRAP_LIST = "스크랩 목록 불러오기 성공했습니다.";
 
     // ScrapController
+    public static String CLICK_LIST = "폴더 목록 불러오기 성공했습니다.";
     public static String SCRAPING = "스크랩 성공했습니다.";
     public static String SCRAP_MAIN = "메인페이지에서 스크랩 저장 성공했습니다.";
     public static String SCRAP_PAGE = "스크랩 페이지 띄우기 성공했습니다.";
