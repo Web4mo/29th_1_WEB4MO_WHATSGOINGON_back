@@ -85,8 +85,10 @@ public class CategoryKeywordService {
     public List<Category> userCategories(Member member){
         List<Category> categories=new ArrayList<>();
         for(CategoryUser category: categoryUserRepository.findByMember(member)) {
+            String  ca=category.getCategory().getName();
             categories.add(category.getCategory());
         }
+
         return categories;
     }
 

@@ -17,7 +17,7 @@ public enum Category {
     LIFESTYLE_CULTURE("생활문화",List.of("건강정보","도로","여행","음식","패션","공연")),
     IT_SCIENCE("IT과학",List.of("모바일","인터넷","통신","보안","컴퓨터","게임")),
     WORLD("세계",List.of("아시아","미국","유럽","중동")),
-    SPORTS("스포츠",List.of("야구","해외야구","축구","해외축구","농구","배구")),
+    SPORTS("스포츠",List.of("야구","해외 야구","축구","해외 축구","농구","배구")),
     ENTERTAINMENT("연예",List.of("방송","드라마","뮤직","해외 연예"));
 
     private final String name;

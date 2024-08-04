@@ -25,7 +25,6 @@ public class KeywordUser {
     @Column(name = "keyword")
     private String keyword;
 
-
     public void updateKeyword(String keyword){
         this.keyword=keyword;
     }
